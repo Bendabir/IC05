@@ -65,13 +65,14 @@
 									<p>
 										<select id="node-category">
 											<option value="" disabled selected>Catégorie</option>
-											<option value="All">Tout</option>
+											<option value="All">Toutes les catégories</option>
 											<option value="CS">Seulement les CS</option>
 											<option value="TM">Seulement les TM</option>
 										</select>
 
 										<select id="node-branch">
 											<option value="" disabled selected>Branche</option>
+											<option value="All">Toutes les branches</option>
 											<option value="TC">Tronc Commun</option>
 											<option value="GI">Génie Informatique</option>
 											<option value="GB">Génie Biologique</option>
@@ -103,7 +104,11 @@
 					<ul class="collapsible" data-collapsible="expandable">
 						<li>
 							<div class="collapsible-header"><i class="material-icons">info_outline</i>Informations sur l'UV</div>
-							<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+							<div class="collapsible-body">
+								<p id="infos">
+									
+								</p>
+							</div>
 						</li>
 						<li>
 							<div class="collapsible-header"><i class="material-icons">sort</i>Détails parcours</div>
@@ -197,6 +202,7 @@
 		<script type="text/javascript" src="js/plugins/sigma.renderers.glyphs.min.js"></script>
 		<script type="text/javascript" src="js/plugins/sigma.renderers.halo.min.js"></script>
 		<script type="text/javascript" src="js/tools.js"></script>
+		<script type="text/javascript" src="js/graph-tools.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript">
 		  	// Init the select in cards
@@ -234,12 +240,21 @@
 					});
 				});
 
+				// Specify a node category
 				$('#node-category').change(function(){
-					applyFilter();
+					applyCategoryFilter();
 				});
 
-				$('#user-uvs').change(function(){
-					showUserUVs($(this).prop('checked'));						
+				$('#node-branch').change(function(){
+					applyBranchFilter();
+				});
+
+				// Specify the user's UVs
+				$('#visibility-me').change(function(){
+					showUserUVs(true);						
+				});
+				$('#visibility-all').change(function(){
+					showUserUVs(false);						
 				});
 		    });
 		</script>
