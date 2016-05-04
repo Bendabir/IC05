@@ -193,6 +193,21 @@ function init(){
 					});
 				}
 				else{
+					// Display information about the last selected node
+					var message = '',
+						selectedNode = activeState.nodes()[activeState.nodes().length - 1];
+					if(selectedNode.attributes['Type'] == 'UV') {
+						message = 'Code : ' + selectedNode.originalLabel + '<br/>'
+							+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
+							+ 'Catégorie : ' + selectedNode.attributes['Cat'] + '<br/>'
+							+ 'Nombre de crédits : ' + selectedNode.attributes['nbCredits'];
+						$('#right-menu-infoUV').html(message);
+					}
+					else {
+						message = 'Semestre : ' + selectedNode.originalLabel;
+						$('#right-menu-infoUV').html(message);
+					}
+
 					// Check other activated nodes 
 					activeState.nodes().forEach(function(n){
 						heads.push(n.id);
@@ -233,21 +248,20 @@ function init(){
 			});
 
 			s.bind('clickNode', function (e) {
-				console.log(e);
-				var message = '';
-				if (e.data.node.attributes['Type'] == 'UV') {
-					message = 'Code : ' + e.data.node.originalLabel + '<br/>'
-						+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
-						+ 'Catégorie : ' + e.data.node.attributes['Cat'] + '<br/>'
-						+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
-					$('#right-menu-infoUV').html(message);
-				}
-				else {
-					message = 'Semestre : ' + e.data.node.originalLabel;
-					$('#right-menu-infoUV').html(message);
-				}
+				// var message = '';
+				// if (e.data.node.attributes['Type'] == 'UV') {
+				// 	message = 'Code : ' + e.data.node.originalLabel + '<br/>'
+				// 		+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
+				// 		+ 'Catégorie : ' + e.data.node.attributes['Cat'] + '<br/>'
+				// 		+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
+				// 	$('#right-menu-infoUV').html(message);
+				// }
+				// else {
+				// 	message = 'Semestre : ' + e.data.node.originalLabel;
+				// 	$('#right-menu-infoUV').html(message);
+				// }
 
-				s.refresh();
+				// s.refresh();
 			});
 
 			// When clicking outside the graph, getting back to initial state
