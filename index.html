@@ -14,7 +14,10 @@
 	</head>
 
 	<body>
+
 		<div class="row">
+
+			<!-- ===== Header ===== -->
 			<div class="navbar-fixed">
 				<nav>
 					<div class="nav-wrapper blue-grey darken-3">
@@ -67,6 +70,8 @@
 				</div>
 			</div> -->
 
+
+			<!-- ===== Left Menu ===== -->
 			<div class="col s2">
 				<div class="card" id="filters-card">
 						<ul class="collapsible" data-collapsible="accordion">
@@ -86,13 +91,23 @@
 				</div>
 			</div>
 
+
+
+			<!-- ===== Right Menu ===== -->
+
 			<div class="col s2 push-s8">
-				<div class="card blue-grey darken-1">
-					<div class="card-content white-text">
-						<span class="card-title">Informations sur l'UV</span>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis, nulla id laoreet lobortis, nunc ante auctor leo, sed hendrerit elit lorem porttitor est. Proin feugiat porta nulla non porttitor. Aenean quis molestie velit. Quisque ornare sodales risus, a sollicitudin justo dictum tincidunt. Vestibulum risus odio, volutpat quis ligula non, vestibulum scelerisque lorem. Suspendisse mollis, est eu ornare condimentum, quam metus mollis odio, at mollis purus enim id massa. Donec eu erat purus. Proin vitae quam sit amet lacus fermentum aliquam.</p>
-					</div>
-				</div>			
+				<div class="card" id="right-menu">
+					<ul class="collapsible" data-collapsible="expandable">
+						<li>
+							<div class="collapsible-header"><i class="material-icons">info_outline</i>Informations sur l'UV</div>
+							<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+						</li>
+						<li>
+							<div class="collapsible-header"><i class="material-icons">sort</i>Détails parcours</div>
+							<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+						</li>
+					</ul>
+				</div>
 			</div>
 
 			<div id="graph-container"></div>
@@ -191,9 +206,10 @@
 					in_duration: 300, // Transition in duration
 					out_duration: 200
 				});
+
 				$(document).ready(function(){
 					$('.collapsible').collapsible({
-						accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+						accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
 					});
 				});
 
