@@ -1,33 +1,22 @@
 // For hidding or not some of nodes
 function applyCategoryFilter(){
-	var filter = $('#node-category').val();
+	var filter = $('#node-category').val(),
+		categories= ['CS', 'TM'];
 
-	switch(filter){
-		// Checking is dirty and expensive, better to try with exceptions
-		case 'CS' : // For hiding TM
-			if(!search('CS', 'key', filters.serialize())){
-				filters.undo('TM');
-				filters
-					.nodesBy(function(n){
-						return n.attributes.Type != 'UV' || n.attributes.Cat == 'CS';
-					}, 'CS')
-					.apply();
-			}
-			break;
-		case 'TM' : // For hiding CS
-			if(!search('TM', 'key', filters.serialize())){
-				filters.undo('CS');
-				filters
-					.nodesBy(function(n){
-						return n.attributes.Type != 'UV' || n.attributes.Cat == 'TM';
-					}, 'TM')
-					.apply();
-			}
-			break;
-		default : // Undo filters
-			filters.undo('CS', 'TM').apply();
-			break;
+	if(filter != 'All' && filter != ''){
+		if(!search(filter, 'key', filters.serialize())){
+			filters.undo(categories.filter(function(e){
+				return e != filter;
+			}))
+			filters
+				.nodesBy(function(n){
+					return n.attributes.Type != 'UV' || n.attributes.Cat == filter;
+				}, filter)
+				.apply();
+		}
 	}
+	else
+		filters.undo(categories).apply();
 }
 
 // For hiding not without relation with the targeted branch
@@ -48,7 +37,7 @@ function applyBranchFilter(){
 		}
 	}
 	else
-		filters.undo('TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB').apply();
+		filters.undo(branchs).apply();
 }
 
 // Unselect all the nodes
