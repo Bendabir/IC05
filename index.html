@@ -69,18 +69,43 @@
 
 			<div class="col s2">
 				<div class="card" id="filters-card">
-						<ul class="collapsible" data-collapsible="accordion">
+						<ul class="collapsible" data-collapsible="expandable">
 							<li>
-								<div class="collapsible-header"><i class="material-icons">visibility</i>Visualisation</div>
-								<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+								<div class="collapsible-header active"><i class="material-icons">visibility</i>Visualisation</div>
+								<div class="collapsible-body">
+									<p>
+										<input name="visibility-group" type="radio" id="visibility-all" class="with-gap"/>
+										<label for="visibility-all">Tout</label>
+										<br />
+										<input name="visibility-group" type="radio" id="visibility-me" class="with-gap"/>
+										<label for="visibility-me">Mon parcours</label>
+										<br />
+										<input name="visibility-group" type="radio" id="visibility-same" class="with-gap"/>
+										<label for="visibility-same">Parcours similaires</label>
+									</p>
+								</div>
 							</li>
 							<li>
 								<div class="collapsible-header"><i class="material-icons">sort</i>Filtres</div>
-								<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+								<div class="collapsible-body">
+									<p>
+										<div class="input-field">
+											<select id="node-category">
+												<option value="" disabled selected>Choisissez une catégorie</option>
+												<option value="All">Tout</option>
+												<option value="CS">Seulement les CS</option>
+												<option value="TM">Seulements les TM</option>
+											</select>
+											<label>Catégorie</label>
+										</div>
+									</p>
+								</div>
 							</li>
 							<li>
-								<div class="collapsible-header"><i class="material-icons">perm_identity</i>Mes parcours</div>
-								<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+								<div class="collapsible-header"><i class="material-icons">timeline</i>Mes parcours</div>
+								<div class="collapsible-body">
+									
+								</div>
 							</li>
 						</ul>
 				</div>
@@ -146,11 +171,11 @@
 					<h5>Commandes</h5>
 
 					<div>
-						<kbd>Espace</kbd> + <kbd>Clic gauche</kbd> : Sélectionner plusieurs noeuds<br />
-						<kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> : Se déplacer dans le graphe<br />
-						<kbd>Espace</kbd> + <kbd>↑</kbd> : Zoomer<br />
-						<kbd>Espace</kbd> + <kbd>↓</kbd> : Dézoomer<br />
-						<kbd>Espace</kbd> + <kbd>0</kbd> : Réinitialiser la vue<br />
+						<p><kbd>Espace</kbd> + <kbd>Clic gauche</kbd> : Sélectionner plusieurs noeuds</p><br />
+						<p><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> : Se déplacer dans le graphe</p><br />
+						<p><kbd>Espace</kbd> + <kbd>↑</kbd> : Zoomer</p><br />
+						<p><kbd>Espace</kbd> + <kbd>↓</kbd> : Dézoomer</p><br />
+						<p><kbd>Espace</kbd> + <kbd>0</kbd> : Réinitialiser la vue</p><br />
 					</div>
 
 					<div class="divider"></div>
@@ -193,7 +218,7 @@
 				});
 				$(document).ready(function(){
 					$('.collapsible').collapsible({
-						accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+						accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
 					});
 				});
 

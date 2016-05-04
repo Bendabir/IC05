@@ -34,3 +34,11 @@ body {
 .collapsible {
 	box-shadow: none;
 }
+
+kbd {
+	color: white;
+	background: #333;
+	padding: 2px 4px;
+	border-radius: 2px;
+	box-shadow: 1px 1px 2px 0px black;
+}
