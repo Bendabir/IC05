@@ -32,24 +32,23 @@ function applyCategoryFilter(){
 
 // For hiding not without relation with the targeted branch
 function applyBranchFilter(){
-	var filter = $('#node-branch').val();
+	var filter = $('#node-branch').val(),
+		branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'];
 
-	switch(filter){
-		// Checking is dirty and expensive, better to try with exceptions
-		case 'CS' : // For hiding TM
-			if(!search('CS', 'key', filters.serialize())){
-				filters.undo('TM');
-				filters
-					.nodesBy(function(n){
-						return n.attributes.Type != 'UV' || n.attributes.Cat == 'CS';
-					}, 'CS')
-					.apply();
-			}
-			break;
-		default : // Undo filters
-			filters.undo('TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB').apply();
-			break;
+	if(filter != 'All' && filter != ''){
+		if(!search(filter, 'key', filters.serialize())){
+			filters.undo(branchs.filter(function(e){
+				return e != filter;
+			}))
+			filters
+				.nodesBy(function(n){
+					return n.attributes['Modularity Class'] == getModularity(filter);
+				}, filter)
+				.apply();
+		}
 	}
+	else
+		filters.undo('TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB').apply();
 }
 
 // Unselect all the nodes
@@ -57,8 +56,8 @@ function unselectAll(){
 	activeState.dropNodes();
 }
 
-// Locate a group of node (by modularity class)
-function locateBranch(b){
+// Get the modularity of a subset
+function getModularity(branch){
 	var classes = {
 		'TC' : '5',
 		'GI' : '2',
@@ -69,7 +68,12 @@ function locateBranch(b){
 		'GP' : '3',
 	};
 
-	var modularity = classes[b];
+	return classes[branch];
+}
+
+// Locate a group of node (by modularity class)
+function locateBranch(branch){
+	var modularity = getModularity(branch);
 
 	if(typeof modularity !== 'undefined'){
 		var nodes = [];

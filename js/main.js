@@ -247,7 +247,6 @@ function init(){
 					$('#right-menu-infoUV').html(message);
 				}
 
-				// $('#right-menu-infoUV').html(''); // TODO ajouter au git
 				s.refresh();
 			});
 
@@ -255,6 +254,7 @@ function init(){
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
+				$('#right-menu-infoUV').html(''); // TODO ajouter au git
 			});
 
 			// Binding some hover event for a fancy cursor
