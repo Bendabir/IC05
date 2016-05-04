@@ -381,6 +381,25 @@ sigma.parsers.json(
 			s.refresh(); // Refresh the graph
 		});
 
+		s.bind('clickNode', function (e) {
+			console.log(e);
+			var message = '';
+			if (e.data.node.attributes['Type'] == 'UV') {
+				message = 'Code : ' + e.data.node.originalLabel + '<br/>'
+					+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
+					+ 'Catérogie : ' + e.data.node.attributes['Cat'] + '<br/>'
+					+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
+				$('#right-menu-infoUV').html(message);
+			}
+			else {
+				message = 'Semestre : ' + e.data.node.originalLabel;
+				$('#right-menu-infoUV').html(message);
+			}
+
+		});
+
+
+
 		// When clicking outside the graph, getting back to initial state
 		s.bind('clickStage', function(e){
 			s.graph.nodes().forEach(function(n){
@@ -394,6 +413,9 @@ sigma.parsers.json(
 			});
 
 			activeState.dropNodes(); // Unselect all nodes
+
+			// clear infos graphe
+			$('#right-menu-infoUV').html(''); // TODO ajouter au git
 
 			s.refresh();
 		});
