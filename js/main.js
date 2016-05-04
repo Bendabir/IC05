@@ -238,7 +238,7 @@ function init(){
 				if (e.data.node.attributes['Type'] == 'UV') {
 					message = 'Code : ' + e.data.node.originalLabel + '<br/>'
 						+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
-						+ 'Catérogie : ' + e.data.node.attributes['Cat'] + '<br/>'
+						+ 'Catégorie : ' + e.data.node.attributes['Cat'] + '<br/>'
 						+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
 					$('#right-menu-infoUV').html(message);
 				}
