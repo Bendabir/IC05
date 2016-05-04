@@ -1,0 +1,36 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #fcfcfc;
+}
+
+#graph-container {
+	top: 65px;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	position: absolute;
+}
+
+#loader-wrapper {
+	left: 50%; 
+	top: 50%; 
+	transform: translate(-50%, -50%); 
+	position: absolute
+}
+
+.card {
+	overflow: visible;
+	z-index: 2;
+}
+
+.card-panel {
+	z-index: 2;
+}
+
+.collapsible {
+	box-shadow: none;
+}

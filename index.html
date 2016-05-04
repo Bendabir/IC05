@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Linkurious.js</title>
+		<meta name="charset" charset="utf-8">
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+
+	<body>
+		<div class="row">
+			<div class="navbar-fixed">
+				<nav>
+					<div class="nav-wrapper blue-grey darken-3">
+						<div class="col s4">
+							<a href="#!" class="brand-logo">UVs</a>
+						</div>
+
+						<div class="col s4 push-s4">
+							<div class="input-field">
+								<i class="material-icons prefix" style="color: white;">search</i>
+								<input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" length="5">
+							</div>
+						</div>
+
+						<div class="col s4 push-s4">
+							<ul class="right hide-on-med-and-down">
+								<li><a href="#options-modal" class="modal-trigger"><i class="material-icons">settings</i></a></li>
+								<li><a href="#about-modal" class="modal-trigger"><i class="material-icons">info_outline</i></a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+
+<!-- 			<div class="col s2">
+				<div class="card blue-grey darken-1" id="filters-card">
+					<div class="card-content white-text">
+						<span class="card-title">Filtre</span>
+
+						<div class="input-field">
+							<select id="node-category">
+						    	<option value="" disabled selected>Choisissez une catégorie</option>
+						    	<option value="All">Tout</option>
+						    	<option value="CS">Seulement les CS</option>
+						    	<option value="TM">Seulements les TM</option>
+							</select>
+							<label>Catégorie</label>
+						</div>
+
+						<div class="switch" id="user-uvs-switch">
+							Mon parcours					
+							<label style="margin-left: 20px;">
+							Non
+							<input type="checkbox" id="user-uvs">
+							<span class="lever"></span>
+							Oui
+							</label>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+			<div class="col s2">
+				<div class="card" id="filters-card">
+						<ul class="collapsible" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header"><i class="material-icons">visibility</i>Visualisation</div>
+								<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+							</li>
+							<li>
+								<div class="collapsible-header"><i class="material-icons">sort</i>Filtres</div>
+								<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+							</li>
+							<li>
+								<div class="collapsible-header"><i class="material-icons">perm_identity</i>Mes parcours</div>
+								<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+							</li>
+						</ul>
+				</div>
+			</div>
+
+			<div class="col s2 push-s8">
+				<div class="card blue-grey darken-1">
+					<div class="card-content white-text">
+						<span class="card-title">Informations sur l'UV</span>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam venenatis, nulla id laoreet lobortis, nunc ante auctor leo, sed hendrerit elit lorem porttitor est. Proin feugiat porta nulla non porttitor. Aenean quis molestie velit. Quisque ornare sodales risus, a sollicitudin justo dictum tincidunt. Vestibulum risus odio, volutpat quis ligula non, vestibulum scelerisque lorem. Suspendisse mollis, est eu ornare condimentum, quam metus mollis odio, at mollis purus enim id massa. Donec eu erat purus. Proin vitae quam sit amet lacus fermentum aliquam.</p>
+					</div>
+				</div>			
+			</div>
+
+			<div id="graph-container"></div>
+		</div>	
+		
+		<div id="loader-wrapper">
+			<div class="preloader-wrapper big active" id="graph-loader">
+				<div class="spinner-layer spinner-blue-only">
+					<div class="circle-clipper left">
+					<div class="circle"></div>
+					</div><div class="gap-patch">
+					<div class="circle"></div>
+					</div><div class="circle-clipper right">
+					<div class="circle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="fixed-action-btn" style="right: 10px; bottom: 10px;">
+			<a class="btn-floating btn-large blue-grey darken-1">
+				<i class="large material-icons">aspect_ratio</i>
+			</a>
+			<ul>
+				<li><a class="btn-floating blue-grey lighten-2" onclick="zoomOut()"><i class="material-icons">zoom_out</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2" onclick="zoomIn()"><i class="material-icons">zoom_in</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2" onclick="fitSize()"><i class="material-icons">settings_overscan</i></a></li>
+		    </ul>
+		</div>
+
+		<div id="about-modal" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<h4>A propos</h4>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et tincidunt diam, in ullamcorper ligula. Integer non dolor viverra, commodo dui vel, fringilla nunc. Donec vestibulum tortor dignissim, fermentum ex sit amet, facilisis neque. Aenean nec dictum sapien. Morbi lacinia nisi vel risus ultrices, sit amet egestas est pharetra. Cras aliquam tellus in dignissim vulputate. Phasellus blandit, odio lacinia pulvinar tincidunt, lorem magna scelerisque ex, at rutrum velit lectus quis metus. Morbi id erat non ipsum rutrum fermentum. Etiam at ipsum ultricies, convallis quam elementum, convallis leo. Pellentesque molestie diam eget efficitur rhoncus. Proin eget odio ornare, suscipit ante nec, faucibus sapien. Aliquam accumsan, dolor vitae rhoncus accumsan, ipsum dui lacinia turpis, id euismod sem neque non elit.
+				</p>
+				<br />
+				<p>
+					Nam fringilla lacus quam, ac pretium libero blandit id. Nunc iaculis varius fringilla. Integer vehicula felis lacus, ut bibendum turpis fermentum non. Ut interdum sodales orci. Aenean hendrerit posuere vulputate. Maecenas faucibus odio ut ante egestas viverra. Proin pellentesque lorem vel erat feugiat rutrum. Ut eget lacus risus. Curabitur mattis sagittis arcu eget rhoncus.
+				</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect btn-flat">Fermer</a>
+			</div>
+		</div>
+
+		<div id="options-modal" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<h4>Options</h4>
+				<div class="col s12">
+					<h5>Commandes</h5>
+
+					<div>
+						<kbd>Espace</kbd> + <kbd>Clic gauche</kbd> : Sélectionner plusieurs noeuds<br />
+						<kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> : Se déplacer dans le graphe<br />
+						<kbd>Espace</kbd> + <kbd>↑</kbd> : Zoomer<br />
+						<kbd>Espace</kbd> + <kbd>↓</kbd> : Dézoomer<br />
+						<kbd>Espace</kbd> + <kbd>0</kbd> : Réinitialiser la vue<br />
+					</div>
+
+					<div class="divider"></div>
+					
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect btn-flat">Fermer</a>
+			</div>
+		</div>
+
+		<!--Import jQuery before materialize.js-->
+		<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+		<script type="text/javascript" src="js/materialize.js"></script>
+		<script type="text/javascript" src="js/sigma.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.activeState.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.select.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.keyboard.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.animate.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.design.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.legend.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.filter.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.plugins.locate.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.parsers.json.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.renderers.linkurious.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.renderers.glyphs.min.js"></script>
+		<script type="text/javascript" src="js/plugins/sigma.renderers.halo.min.js"></script>
+		<script type="text/javascript" src="js/tools.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript">
+		  	// Init the select in cards
+		  	$(document).ready(function(){
+				$('select').material_select();
+				$(".button-collapse").sideNav();
+				$('.modal-trigger').leanModal({
+					dismissible: true, // Modal can be dismissed by clicking outside of the modal
+					opacity: .5, // Opacity of modal background
+					in_duration: 300, // Transition in duration
+					out_duration: 200
+				});
+				$(document).ready(function(){
+					$('.collapsible').collapsible({
+						accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+					});
+				});
+
+				// To execute function on enter key press
+				(function($){
+					$.fn.onEnter = function(func){
+						this.bind('keypress', function(e){
+							if (e.keyCode == 13) 
+								func.apply(this, [e]);
+							});
+						return this; 
+					};
+				})(jQuery);
+
+				// On enter, search the node
+				$(function(){
+					$("#node-to-search").onEnter(function(){
+						searchNode($(this).val());
+					});
+				});
+
+				$('#node-category').change(function(){
+					applyFilter();
+				});
+
+				$('#user-uvs').change(function(){
+					showUserUVs($(this).prop('checked'));						
+				});
+		    });
+		</script>
+	</body>
+</html>
