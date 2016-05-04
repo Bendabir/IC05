@@ -45,7 +45,7 @@
 				<div class="card" id="left-menu">
 						<ul class="collapsible" data-collapsible="expandable">
 							<li>
-								<div class="collapsible-header active"><i class="material-icons">visibility</i>Visualisation</div>
+								<div class="collapsible-header active"><i class="material-icons">visibility</i><b>Visualisation</b></div>
 								<div class="collapsible-body">
 									<p>
 										<input name="visibility-group" type="radio" id="visibility-all" class="with-gap" checked="checked" />
@@ -60,7 +60,7 @@
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header"><i class="material-icons">sort</i>Filtres</div>
+								<div class="collapsible-header"><i class="material-icons">sort</i><b>Filtres</b></div>
 								<div class="collapsible-body">
 									<p>
 										<select id="node-category">
@@ -85,7 +85,7 @@
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header"><i class="material-icons">timeline</i>Mes parcours</div>
+								<div class="collapsible-header"><i class="material-icons">timeline</i><b>Mes parcours</b></div>
 								<div class="collapsible-body">
 									<ul class="collection">
 										<li class="collection-item"><div>Parcours 1<a href="#!" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
@@ -99,24 +99,24 @@
 			</div>
 
 			<!-- ===== Right Menu ===== -->
-			<div class="col s2 push-s8">
-				<div class="card" id="right-menu">
-					<ul class="collapsible" data-collapsible="expandable">
-						<li>
-							<div class="collapsible-header"><i class="material-icons">info_outline</i>Informations sur l'UV</div>
-							<div class="collapsible-body">
-								<p id="infos">
-									
-								</p>
-							</div>
-						</li>
-						<li>
-							<div class="collapsible-header"><i class="material-icons">sort</i>Détails parcours</div>
-							<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-						</li>
-					</ul>
-				</div>
-			</div>
+            <div class="col s2 push-s8">
+                <div class="card" id="right-menu">
+                    <ul class="collapsible" data-collapsible="expandable">
+                        <li>
+                            <div class="collapsible-header active"><i class="material-icons">info_outline</i><b>Informations sur l'UV</b></div>
+                            <div class="collapsible-body">
+                                <p id="right-menu-infoUV"></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">sort</i><b>Détails parcours</b></div>
+                            <div class="collapsible-body">
+                                <p>Lorem ipsum dolor sit amet.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
 			<div id="graph-container"></div>
 		</div>	

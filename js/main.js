@@ -229,12 +229,26 @@ function init(){
 					});
 				}
 
-				s.refresh(); // Refresh the graph
+				s.refresh();
 			});
 
-			// On a node click, displaying the infos
-			s.bind('clickNodes', function(e){
+			s.bind('clickNode', function (e) {
+				console.log(e);
+				var message = '';
+				if (e.data.node.attributes['Type'] == 'UV') {
+					message = 'Code : ' + e.data.node.originalLabel + '<br/>'
+						+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
+						+ 'Catérogie : ' + e.data.node.attributes['Cat'] + '<br/>'
+						+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
+					$('#right-menu-infoUV').html(message);
+				}
+				else {
+					message = 'Semestre : ' + e.data.node.originalLabel;
+					$('#right-menu-infoUV').html(message);
+				}
 
+				// $('#right-menu-infoUV').html(''); // TODO ajouter au git
+				s.refresh();
 			});
 
 			// When clicking outside the graph, getting back to initial state
@@ -242,7 +256,6 @@ function init(){
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
 			});
-
 
 			// Binding some hover event for a fancy cursor
 			// Some events of Sigma.js are no longer existing in linkurious.js
@@ -276,7 +289,7 @@ function init(){
 			});
 
 			s.refresh();
-	});
+		});
 
 	// Instanciate the ActiveState plugin:
 	activeState = sigma.plugins.activeState(s);
