@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from visualizer import views as visualizer_views
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', visualizer_views.home)
 ]

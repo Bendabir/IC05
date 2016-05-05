@@ -128,7 +128,7 @@ function init(){
 
 	// Load graph
 	sigma.parsers.json(
-		'data/uvs.json', 
+		'static/data/uvs.json', 
 		s,
 		function(){
 			// Hiding the loader

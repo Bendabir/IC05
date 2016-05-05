@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,8 +7,8 @@
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!--Import materialize.css-->
-		<link type="text/css" rel="stylesheet" href="bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/>
-		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link type="text/css" rel="stylesheet" href="{% static 'bower_components/Materialize/dist/css/materialize.min.css' %}" media="screen,projection"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -235,24 +236,24 @@
 		<!-- ================================================================== -->
 
 		<!--Import jQuery before materialize.js-->
-		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-		<script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/sigma.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.activeState.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.select.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.keyboard.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.animate.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.design.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.legend.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.filter.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.locate.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.parsers.json.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.renderers.linkurious.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.renderers.glyphs.min.js"></script>
-		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.renderers.halo.min.js"></script>
-		<script type="text/javascript" src="js/tools.js"></script>
-		<script type="text/javascript" src="js/graph-tools.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bower_components/Materialize/dist/js/materialize.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/sigma.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.activeState.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.select.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.keyboard.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.animate.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.design.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.legend.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.filter.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.plugins.locate.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.parsers.json.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.renderers.linkurious.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.renderers.glyphs.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.renderers.halo.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/tools.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/graph-tools.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 
 
 
