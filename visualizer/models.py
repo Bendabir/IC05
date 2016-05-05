@@ -4,6 +4,8 @@
 
 from django.db import models
 
+from visualizer.api import uvs as api_uvs
+
 class Etudiant(models.Model):
     """ Student in database """
     login = models.CharField(max_length=8, primary_key=True, db_column="loginEtudiant")
@@ -36,6 +38,10 @@ class UV(models.Model):
         """ Printing UV for visualization """
         return self.code + "' (" + self.nom + ")"
 
+    def reviews(self):
+        """ Obtenir les avis sur l'UV voulue """
+        return api_uvs.get_uvweb_information(self.code)
+
     class Meta(object):
         """ Modélisation en DB """
         db_table = "UV"
@@ -47,12 +53,7 @@ class UVSuivie(models.Model):
     etudiant = models.ForeignKey(Etudiant, db_column="loginEtudiant")
     uv_suivie = models.ForeignKey(UV, db_column="codeUV")
     semestre = models.CharField(max_length=5, db_column="codeSemestre")
-    semestre_etudiant = models.CharField(max_length=4, db_column="GX")
-
-    def __str__(self):
-        """ Printing UVsuivie for visualization """
-        return self.etudiant + " (" + self.semestre_etudiant + ") - " +\
-         self.uv_suivie + " (" + self.semestre + ")"
+    semestre_etudiant = models.CharField(max_length=5, db_column="GX")
 
     class Meta(object):
         """ Modélisation en DB """

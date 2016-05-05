@@ -20,5 +20,7 @@ from visualizer import views as visualizer_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', visualizer_views.home)
+    url(r'^$', visualizer_views.home),
+    url(r'^getUVs', visualizer_views.student_info),
+    url(r'^uvweb', visualizer_views.uvweb_information),
 ]
