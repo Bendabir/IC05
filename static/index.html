@@ -1,65 +1,55 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Linkurious.js</title>
+		<title>UVs UTC Cartographie</title>
 		<meta name="charset" charset="utf-8">
 		<!--Import Google Icon Font-->
 		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="bower_components/Materialize/dist/css/materialize.min.css" media="screen,projection"/>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<!--Import jquery.css-->
+		<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
 
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	</head>
 
 	<body class="grey lighten-5">
-		<div class="row">
-
-
 			<!-- ================================================================== -->
 			<!-- ============================= Header ============================ -->
 			<!-- ================================================================== -->
 			<div class="navbar-fixed">
 				<nav>
 					<div class="nav-wrapper blue-grey darken-3">
-						<div class="col s4">
-							<a href="#!" class="brand-logo">UVs</a>
+						<ul class="brand-logo left" style="padding-left: 10px;">
+							<li>UVs</li>
+						</ul>
+
+						<div class="brand-logo center input-field">
+							<i class="material-icons prefix" style="color: white;">search</i><input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" style="width: 110%;">
 						</div>
 
-						<div class="col s4 push-s4">
-							<div class="input-field">
-								<i class="material-icons prefix" style="color: white;">search</i>
-								<input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" length="5">
-							</div>
-						</div>
-
-						<div class="col s4 push-s4">
-							<ul class="right hide-on-med-and-down">
-								<li><a href="#options-modal" class="modal-trigger"><i class="material-icons">settings</i></a></li>
-								<li><a href="#about-modal" class="modal-trigger"><i class="material-icons">info_outline</i></a></li>
-							</ul>
-						</div>
+						<ul class="right">
+							<li><a href="#options-modal" class="modal-trigger"><i class="material-icons">settings</i></a></li>
+							<li><a href="#about-modal" class="modal-trigger"><i class="material-icons">info_outline</i></a></li>
+						</ul>
 					</div>
 				</nav>
 			</div>
 
-
-
-
-
-
+		<div class="row">
 
 			<!-- ================================================================== -->
 			<!-- ====================  Left and right menus ======================= -->
 			<!-- ================================================================== -->
 
 			<!-- ===== Left Menu ===== -->
-			<div class="col s2">
+			<div class="col s3 m3 l2">
 				<div class="card" id="left-menu">
 						<ul class="collapsible" data-collapsible="expandable">
 							<li>
-								<div class="collapsible-header active"><i class="material-icons">visibility</i><b>Visualisation</b></div>
+								<div class="collapsible-header active"><i class="material-icons">visibility</i><b class="truncate">Visualisation</b></div>
 								<div class="collapsible-body">
 									<p>
 										<input name="visibility-group" type="radio" id="visibility-all" class="with-gap" checked="checked" />
@@ -74,7 +64,7 @@
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header"><i class="material-icons">sort</i><b>Filtres</b></div>
+								<div class="collapsible-header"><i class="material-icons">sort</i><b class="truncate">Filtres</b></div>
 								<div class="collapsible-body">
 									<p>
 										<select id="node-category">
@@ -99,12 +89,12 @@
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header"><i class="material-icons">timeline</i><b>Mes parcours</b></div>
+								<div class="collapsible-header"><i class="material-icons">timeline</i><b class="truncate">Mes parcours</b></div>
 								<div class="collapsible-body">
 									<ul class="collection">
 										<li class="collection-item"><div>Parcours 1<a href="#!" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
 										<li class="collection-item active"><div>Parcours 2<a href="#!" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
-										<li class="collection-item"><div>Ajouter un nouveau parcours<a href="#!" class="secondary-content"><i class="material-icons">playlist_add</i></a></div></li>
+										<li class="collection-item truncate"><div>Ajouter un nouveau parcours<a href="#!" class="secondary-content"><i class="material-icons">playlist_add</i></a></div></li>
 									</ul>
 								</div>
 							</li>
@@ -113,17 +103,17 @@
 			</div>
 
 			<!-- ===== Right Menu ===== -->
-            <div class="col s2 push-s8">
+            <div class="col s3 m3 l2 push-s6 push-m6 push-l8">
                 <div class="card" id="right-menu">
                     <ul class="collapsible" data-collapsible="expandable">
                         <li>
-                            <div class="collapsible-header active"><i class="material-icons">info_outline</i><b>Informations sur l'UV</b></div>
+                            <div class="collapsible-header active"><i class="material-icons">info_outline</i><b class="truncate">Informations sur l'UV</b></div>
                             <div class="collapsible-body">
-                                <p id="right-menu-infoUV">Aucun noeud sélectionné.</p>
+                                <p id="right-menu-infoUV">Aucun noeud sélectionné</p>
                             </div>
                         </li>
                         <li>
-                            <div class="collapsible-header"><i class="material-icons">sort</i><b>Détails parcours</b></div>
+                            <div class="collapsible-header"><i class="material-icons">sort</i><b class="truncate">Détails parcours</b></div>
                             <div class="collapsible-body">
                                 <p>Lorem ipsum dolor sit amet.</p>
                             </div>
@@ -131,6 +121,8 @@
                     </ul>
                 </div>
             </div>
+
+
 
 			<div id="graph-container"></div>
 		</div>
@@ -236,6 +228,7 @@
 
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="bower_components/Materialize/dist/js/materialize.min.js"></script>
 		<script type="text/javascript" src="node_modules/linkurious/dist/sigma.min.js"></script>
 		<script type="text/javascript" src="node_modules/linkurious/dist/plugins/sigma.plugins.activeState.min.js"></script>
@@ -268,7 +261,7 @@
 		  	// Init the select in cards
 		  	$(document).ready(function(){
 				$('select').material_select();
-				$(".button-collapse").sideNav();
+				// $(".button-collapse").sideNav();
 				$('.modal-trigger').leanModal({
 					dismissible: true, // Modal can be dismissed by clicking outside of the modal
 					opacity: .5, // Opacity of modal background
@@ -278,7 +271,7 @@
 
 				$(document).ready(function(){
 					$('.collapsible').collapsible({
-						accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+						accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
 					});
 				});
 
@@ -293,12 +286,33 @@
 					};
 				})(jQuery);
 
+
+				// autocomplete for the search bar
+//				$("#node-to-search").autocomplete({
+//					source: tagsForSearchBar,
+//					// setting the width of the autocomplete window to the width of the search bar
+//					open: function() {
+//						$("ul.ui-menu").width( $(this).innerWidth() );
+//					},
+//					// call the search function when click on a item in the displayed list
+//					select: function(event, ui) {
+//						if(ui.item){
+//							searchNode(ui.item.value);
+//						}
+//						ui.item.value = ''; // reset the search bar
+//					}
+//				});
+
+
 				// On enter, search the node
 				$(function(){
 					$("#node-to-search").onEnter(function(){
 						searchNode($(this).val());
 					});
 				});
+
+
+
 
 				// Specify a node category
 				$('#node-category').change(function(){
@@ -315,6 +329,32 @@
 				});
 				$('#visibility-all').change(function(){
 					showUserUVs(false);						
+				});
+
+				// Some new shortcuts
+				window.addEventListener("keydown",function(e){
+					if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)){
+						e.preventDefault();
+						$('#node-to-search').focus();
+					}
+
+					if(e.ctrlKey && e.keyCode === 96){
+						e.preventDefault();
+						fitSize();
+					}
+
+					if(e.ctrlKey && e.keyCode === 107){
+						e.preventDefault();
+						zoomIn();
+					}
+
+					if(e.ctrlKey && e.keyCode === 109){
+						e.preventDefault();
+						zoomOut();
+					}
+
+					if(e.keyCode === 27)
+						unselectAll();
 				});
 		    });
 		</script>
