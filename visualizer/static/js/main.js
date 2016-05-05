@@ -1,5 +1,12 @@
 var user = parseURI('login'),
-	userUVs = [];
+	userUVs = [],
+	tagsForSearchBar = ['GI', //  - Génie Informatique
+		'GB', // Génie Biologique
+		'GM', // Génie Mécanique
+		'GSM', // Génie des Systèmes Mécaniques
+		'GP', // Génie des Procédés
+		'TC', // Tronc Commun
+		'GSU']; // Génie des Systèmes Urbains
 
 // Graph's var	
 var	s,
@@ -7,7 +14,7 @@ var	s,
 	select,
 	keyboard,
 	filters,
-	locate;
+	locate = null;
 
 // If the user is specified
 if(user != ''){
@@ -76,17 +83,17 @@ function init(){
 		  	defaultLabelActiveColor: '#333',
 		  	labelAlignment: 'inside',
 		  	labelSize: 'proportional',
-		  	labelSizeRatio: 0.55,
+		  	labelSizeRatio: 0.49, // the size of the label relativly to the node size
 
 		  	// Edges
 		  	defaultEdgeType: 'curve',
 		  	enableEdgeHovering: false,
 		  	edgeHoverHighlightNodes: 'circle',
 	      	minEdgeSize: 0.1,
-	      	maxEdgeSize: 2,
+	      	maxEdgeSize: 1, // v1: 2
 		  	
 		  	// Nodes
-	  		minNodeSize: 2, // 3
+	  		minNodeSize: 5, // v1: 3 // v2: 2
 	 	    maxNodeSize: 15, // 10
 			nodeActiveBorderSize: 2,
 			nodeActiveOuterBorderSize: 3,
@@ -110,7 +117,15 @@ function init(){
 
 	      	// Others
 	      	disabledColor: '#ddd',
-	      	disabledLabel: ''
+	      	disabledLabel: '',
+
+			// Zoom
+			// The power degrees applied to the nodes / edges size relatively to the zooming level (https://github.com/jacomyal/sigma.js/wiki/Settings#camera-settings)
+			nodesPowRatio: 0.7, // default value 0.5
+			edgesPowRatio: 0.5, // default value 0.5
+
+			// Perf
+			autoResize: false // If true, the instance will refresh itself whenever a resize event is dispatched from the window object
 	  	}
 	});
 
@@ -136,6 +151,8 @@ function init(){
 
 			// Saving the color and label then initializing
 			s.graph.nodes().forEach(function(n){
+				tagsForSearchBar.push(n.id); // add tags for the autocomplete search
+
 				n.originalColor = n.color;
 				n.originalLabel = n.label;
 				n.disabled = false;
@@ -159,6 +176,8 @@ function init(){
 					}];
 				}
 			});
+			tagsForSearchBar.sort(); // sort the array containing the tags for the autocomplete search bar
+
 
 			s.graph.edges().forEach(function(e){
 				// Changing link between uvs from the user and the semester
@@ -179,6 +198,8 @@ function init(){
 				var toKeep = [],
 					heads = [];
 
+				var message;
+
 				// If no active node
 				if(activeState.nodes().length == 0){
 					// Update color and label
@@ -191,20 +212,24 @@ function init(){
 					s.graph.edges().forEach(function(e){
 						e.color = e.originalColor;
 					});
+
+					message = 'Aucun noeud sélectionné';
+					$('#right-menu-infoUV').html(message);
 				}
 				else{
 					// Display information about the last selected node
-					var message = 'Aucun noeud sélectionné.',
-						selectedNode = activeState.nodes()[activeState.nodes().length - 1];
+					var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
 					if(selectedNode.attributes['Type'] == 'UV') {
 						message = 'Code : ' + selectedNode.id + '<br/>'
-							+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
+							+ 'Nom : ' + selectedNode.attributes['nomUV'] + '<br/>'
 							+ 'Catégorie : ' + selectedNode.attributes['Cat'] + '<br/>'
 							+ 'Nombre de crédits : ' + selectedNode.attributes['nbCredits'];
 						$('#right-menu-infoUV').html(message);
 					}
 					else {
-						message = 'Semestre : ' + selectedNode.id;
+						var nbUVs = s.graph.neighbors(selectedNode.id).length;
+						message = 'Semestre : ' + selectedNode.id + '<br />'
+								+ 'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
 						$('#right-menu-infoUV').html(message);
 					}
 
@@ -268,7 +293,7 @@ function init(){
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
-				$('#right-menu-infoUV').html('Aucun noeud sélectionné.');
+				$('#right-menu-infoUV').html('Aucun noeud sélectionné');
 			});
 
 			// Binding some hover event for a fancy cursor
