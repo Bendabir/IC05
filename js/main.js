@@ -1,6 +1,12 @@
 var user = parseURI('login'),
 	userUVs = [],
-	tagsForSearchBar = [];
+	tagsForSearchBar = ['GI', //  - Génie Informatique
+		'GB', // Génie Biologique
+		'GM', // Génie Mécanique
+		'GSM', // Génie des Systèmes Mécaniques
+		'GP', // Génie des Procédés
+		'TC', // Tronc Commun
+		'GSU']; // Génie des Systèmes Urbains
 
 // Graph's var	
 var	s,

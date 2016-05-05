@@ -285,7 +285,7 @@
 
 				$(document).ready(function(){
 					$('.collapsible').collapsible({
-						accordion : true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+						accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
 					});
 				});
 
@@ -302,17 +302,21 @@
 
 
 				// autocomplete for the search bar
-				$("#node-to-search").autocomplete({
-					source: tagsForSearchBar,
+//				$("#node-to-search").autocomplete({
+//					source: tagsForSearchBar,
+//					// setting the width of the autocomplete window to the width of the search bar
+//					open: function() {
+//						$("ul.ui-menu").width( $(this).innerWidth() );
+//					},
+//					// call the search function when click on a item in the displayed list
+//					select: function(event, ui) {
+//						if(ui.item){
+//							searchNode(ui.item.value);
+//						}
+//						ui.item.value = ''; // reset the search bar
+//					}
+//				});
 
-					// call the search function when click on a item in the displayed list
-					select: function(event, ui) {
-						if(ui.item){
-							searchNode(ui.item.value);
-						}
-						ui.item.value = ''; // reset the search bar
-					}
-				});
 
 				// On enter, search the node
 				$(function(){
