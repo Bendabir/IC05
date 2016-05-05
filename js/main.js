@@ -216,7 +216,9 @@ function init(){
 						$('#right-menu-infoUV').html(message);
 					}
 					else {
-						message = 'Semestre : ' + selectedNode.id;
+						var nbUVs = s.graph.neighbors(selectedNode.id).length;
+						message = 'Semestre : ' + selectedNode.id + '<br />'
+								+ 'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
 						$('#right-menu-infoUV').html(message);
 					}
 
