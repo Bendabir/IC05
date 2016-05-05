@@ -1,2 +1,7 @@
-config.php
 .idea
+visualizer/static/bower_components/
+visualizer/static/node_modules/
+*.pyc
+ic05backend/local_settings.ini
+env/
+*/.DS_Store
