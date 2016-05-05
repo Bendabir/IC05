@@ -197,14 +197,14 @@ function init(){
 					var message = 'Aucun noeud sélectionné.',
 						selectedNode = activeState.nodes()[activeState.nodes().length - 1];
 					if(selectedNode.attributes['Type'] == 'UV') {
-						message = 'Code : ' + selectedNode.originalLabel + '<br/>'
+						message = 'Code : ' + selectedNode.id + '<br/>'
 							+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
 							+ 'Catégorie : ' + selectedNode.attributes['Cat'] + '<br/>'
 							+ 'Nombre de crédits : ' + selectedNode.attributes['nbCredits'];
 						$('#right-menu-infoUV').html(message);
 					}
 					else {
-						message = 'Semestre : ' + selectedNode.originalLabel;
+						message = 'Semestre : ' + selectedNode.id;
 						$('#right-menu-infoUV').html(message);
 					}
 

@@ -32,9 +32,14 @@ function applyBranchFilter(){
 			for(var i = 1; i <= 6; i++)
 				semesters.push(filter + '0' + i);
 
+			// Undo all other branch filters (showing nodes again)
+			filters.undo(branchs.filter(function(e){
+				return e != filter;
+			})).apply();
+
 			// Get nodes linked to the branch
 			semesters.forEach(function(node){
-				s.graph.neighbors(function(n){
+				s.graph.neighbors(node).forEach(function(n){
 					if(toKeep.indexOf(n) == -1)
 						toKeep.push(n);
 				});
@@ -42,13 +47,9 @@ function applyBranchFilter(){
 
 			toKeep = toKeep.concat(semesters);
 
-			// Undo all other branch filters
-			filters.undo(branchs.filter(function(e){
-				return e != filter;
-			}));
 			filters
 				.nodesBy(function(n){
-					return toKeep.indexOf(n.originalLabel) != -1;
+					return toKeep.indexOf(n.id) != -1;
 				}, filter)
 				.apply();
 		}
