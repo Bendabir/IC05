@@ -26,7 +26,7 @@ if(user != ''){
 
 			init();
 		}
-	}
+	};
 
 	xhr.send();
 }

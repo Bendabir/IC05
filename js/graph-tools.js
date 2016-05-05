@@ -7,7 +7,7 @@ function applyCategoryFilter(){
 		if(!search(filter, 'key', filters.serialize())){
 			filters.undo(categories.filter(function(e){
 				return e != filter;
-			}))
+			}));
 			filters
 				.nodesBy(function(n){
 					return n.attributes.Type != 'UV' || n.attributes.Cat == filter;
@@ -28,7 +28,7 @@ function applyBranchFilter(){
 		if(!search(filter, 'key', filters.serialize())){
 			filters.undo(branchs.filter(function(e){
 				return e != filter;
-			}))
+			}));
 			filters
 				.nodesBy(function(n){
 					return n.attributes['Modularity Class'] == getModularity(filter);
@@ -150,7 +150,7 @@ function zoomOut(){
 // Set the halo to specific nodes
 // The size depends on the zoom ratio
 function renderHalo(UVs){
-	var nodes = []
+	var nodes = [];
 
 	UVs.forEach(function(u){
 		var n = s.graph.nodes(u.uv);
