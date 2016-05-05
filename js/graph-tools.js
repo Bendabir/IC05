@@ -110,9 +110,7 @@ function locateBranch(branch){
 			nodes.push(n.originalLabel);
 		});
 
-		// locate.nodes(nodes);
-		// Zoom on visible nodes
-		locate.nodes(displayedNodes());
+		locate.nodes(nodes);
 	}
 }
 
