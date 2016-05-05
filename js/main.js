@@ -194,7 +194,7 @@ function init(){
 				}
 				else{
 					// Display information about the last selected node
-					var message = '',
+					var message = 'Aucun noeud sélectionné.',
 						selectedNode = activeState.nodes()[activeState.nodes().length - 1];
 					if(selectedNode.attributes['Type'] == 'UV') {
 						message = 'Code : ' + selectedNode.originalLabel + '<br/>'
@@ -247,28 +247,28 @@ function init(){
 				s.refresh();
 			});
 
-			s.bind('clickNode', function (e) {
-				// var message = '';
-				// if (e.data.node.attributes['Type'] == 'UV') {
-				// 	message = 'Code : ' + e.data.node.originalLabel + '<br/>'
-				// 		+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
-				// 		+ 'Catégorie : ' + e.data.node.attributes['Cat'] + '<br/>'
-				// 		+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
-				// 	$('#right-menu-infoUV').html(message);
-				// }
-				// else {
-				// 	message = 'Semestre : ' + e.data.node.originalLabel;
-				// 	$('#right-menu-infoUV').html(message);
-				// }
+			// s.bind('clickNode', function (e) {
+			// 	// var message = '';
+			// 	// if (e.data.node.attributes['Type'] == 'UV') {
+			// 	// 	message = 'Code : ' + e.data.node.originalLabel + '<br/>'
+			// 	// 		+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
+			// 	// 		+ 'Catégorie : ' + e.data.node.attributes['Cat'] + '<br/>'
+			// 	// 		+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
+			// 	// 	$('#right-menu-infoUV').html(message);
+			// 	// }
+			// 	// else {
+			// 	// 	message = 'Semestre : ' + e.data.node.originalLabel;
+			// 	// 	$('#right-menu-infoUV').html(message);
+			// 	// }
 
-				// s.refresh();
-			});
+			// 	// s.refresh();
+			// });
 
 			// When clicking outside the graph, getting back to initial state
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
-				$('#right-menu-infoUV').html('');
+				$('#right-menu-infoUV').html('Aucun noeud sélectionné.');
 			});
 
 			// Binding some hover event for a fancy cursor

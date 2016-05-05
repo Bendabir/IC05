@@ -96,7 +96,7 @@ function searchNode(nodeID){
 	nodeID = nodeID.toUpperCase();
 	if(['TC', 'GM', 'GSM', 'GI', 'GSU', 'GP', 'GB'].indexOf(nodeID) != -1){
 		locateBranch(nodeID);
-		$('#graph-container').attr('tabindex', '0'); // Give the focus to the graph
+		$('#graph-container').focus(); // Give the focus to the graph
 	}
 	else {
 		// If the node exists
@@ -110,6 +110,8 @@ function searchNode(nodeID){
 			// Version Raph
 			var searchedNode = s.graph.nodes(nodeID);
 			activeState.addNodes(nodeID);
+			locate.nodes(nodeID);
+
 			if (activeState.nodes().length > 1) {// Then use the plugin locate on the activeState.nodes()
 				var nodesInActiveState = [];
 				activeState.nodes().forEach(function(n){
@@ -129,7 +131,7 @@ function searchNode(nodeID){
 					ratio: 0.6
 				});
 			}
-			$('#graph-container').attr('tabindex', '0'); // Give the focus to the graph
+			$('#graph-container').focus(); // Give the focus to the graph
 		}
 	}
 	$('#node-to-search').val('')
