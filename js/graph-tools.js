@@ -128,7 +128,6 @@ function searchNode(nodeID){
 			// Version Raph
 			var searchedNode = s.graph.nodes(nodeID);
 			activeState.addNodes(nodeID);
-			locate.nodes(nodeID);
 
 			if (activeState.nodes().length > 1) {// Then use the plugin locate on the activeState.nodes()
 				var nodesInActiveState = [];
