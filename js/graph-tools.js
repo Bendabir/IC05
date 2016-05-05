@@ -96,14 +96,14 @@ function searchNode(nodeID){
 	nodeID = nodeID.toUpperCase();
 	if(['TC', 'GM', 'GSM', 'GI', 'GSU', 'GP', 'GB'].indexOf(nodeID) != -1){
 		locateBranch(nodeID);
-		$('#graph-container').attr('tabindex', '0'); // Give the focus to the graph
+		$('#graph-container').focus(); // Give the focus to the graph
 	}
 	else
 		// If the node exists
 		if(typeof s.graph.nodes(nodeID) !== 'undefined'){
 			activeState.addNodes(nodeID);
 			locate.nodes(nodeID);
-			$('#graph-container').attr('tabindex', '0');
+			$('#graph-container').focus();
 		}
 
 	$('#node-to-search').val('');
