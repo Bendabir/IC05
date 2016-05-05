@@ -1,5 +1,6 @@
 var user = parseURI('login'),
-	userUVs = [];
+	userUVs = [],
+	tagsForSearchBar = [];
 
 // Graph's var	
 var	s,
@@ -144,6 +145,8 @@ function init(){
 
 			// Saving the color and label then initializing
 			s.graph.nodes().forEach(function(n){
+				tagsForSearchBar.push(n.id); // add tags for the autocomplete search
+
 				n.originalColor = n.color;
 				n.originalLabel = n.label;
 				n.disabled = false;
@@ -167,6 +170,8 @@ function init(){
 					}];
 				}
 			});
+			tagsForSearchBar.sort(); // sort the array containing the tags for the autocomplete search bar
+
 
 			s.graph.edges().forEach(function(e){
 				// Changing link between uvs from the user and the semester

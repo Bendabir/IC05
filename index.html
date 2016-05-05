@@ -8,6 +8,10 @@
 		<!--Import materialize.css-->
 		<link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<!--Import jquery.css-->
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css">
 
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -29,7 +33,7 @@
 
 						<div class="col s4 push-s4">
 							<div class="input-field">
-								<i class="material-icons prefix" style="color: white;">search</i>
+								<i class="material-icons prefix " style="color: white;">search</i>
 								<input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" length="5">
 							</div>
 						</div>
@@ -131,6 +135,8 @@
                     </ul>
                 </div>
             </div>
+
+
 
 			<div id="graph-container"></div>
 		</div>
@@ -236,6 +242,7 @@
 
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="js/materialize.js"></script>
 		<script type="text/javascript" src="js/sigma.min.js"></script>
 		<script type="text/javascript" src="js/plugins/sigma.plugins.activeState.min.js"></script>
@@ -293,12 +300,29 @@
 					};
 				})(jQuery);
 
+
+				// autocomplete for the search bar
+				$("#node-to-search").autocomplete({
+					source: tagsForSearchBar,
+
+					// call the search function when click on a item in the displayed list
+					select: function(event, ui) {
+						if(ui.item){
+							searchNode(ui.item.value);
+						}
+						ui.item.value = ''; // reset the search bar
+					}
+				});
+
 				// On enter, search the node
 				$(function(){
 					$("#node-to-search").onEnter(function(){
 						searchNode($(this).val());
 					});
 				});
+
+
+
 
 				// Specify a node category
 				$('#node-category').change(function(){
