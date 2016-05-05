@@ -22,16 +22,33 @@ function applyCategoryFilter(){
 // For hiding not without relation with the targeted branch
 function applyBranchFilter(){
 	var filter = $('#node-branch').val(),
-		branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'];
+		branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'],
+		semesters = [],
+		toKeep = [];
 
 	if(filter != 'All' && filter != ''){
 		if(!search(filter, 'key', filters.serialize())){
+			// Generate root nodes
+			for(var i = 1; i <= 6; i++)
+				semesters.push(filter + '0' + i);
+
+			// Get nodes linked to the branch
+			semesters.forEach(function(node){
+				s.graph.neighbors(function(n){
+					if(toKeep.indexOf(n) == -1)
+						toKeep.push(n);
+				});
+			})
+
+			toKeep = toKeep.concat(semesters);
+
+			// Undo all other branch filters
 			filters.undo(branchs.filter(function(e){
 				return e != filter;
 			}));
 			filters
 				.nodesBy(function(n){
-					return n.attributes['Modularity Class'] == getModularity(filter);
+					return toKeep.indexOf(n.originalLabel) != -1;
 				}, filter)
 				.apply();
 		}
