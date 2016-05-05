@@ -76,17 +76,17 @@ function init(){
 		  	defaultLabelActiveColor: '#333',
 		  	labelAlignment: 'inside',
 		  	labelSize: 'proportional',
-		  	labelSizeRatio: 0.55,
+		  	labelSizeRatio: 0.49, // the size of the label relativly to the node size
 
 		  	// Edges
 		  	defaultEdgeType: 'curve',
 		  	enableEdgeHovering: false,
 		  	edgeHoverHighlightNodes: 'circle',
 	      	minEdgeSize: 0.1,
-	      	maxEdgeSize: 2,
+	      	maxEdgeSize: 1, // v1: 2
 		  	
 		  	// Nodes
-	  		minNodeSize: 2, // 3
+	  		minNodeSize: 5, // v1: 3 // v2: 2
 	 	    maxNodeSize: 15, // 10
 			nodeActiveBorderSize: 2,
 			nodeActiveOuterBorderSize: 3,
@@ -110,7 +110,15 @@ function init(){
 
 	      	// Others
 	      	disabledColor: '#ddd',
-	      	disabledLabel: ''
+	      	disabledLabel: '',
+
+			// Zoom
+			// The power degrees applied to the nodes / edges size relatively to the zooming level (https://github.com/jacomyal/sigma.js/wiki/Settings#camera-settings)
+			nodesPowRatio: 0.7, // default value 0.5
+			edgesPowRatio: 0.5, // default value 0.5
+
+			// Perf
+			autoResize: false // If true, the instance will refresh itself whenever a resize event is dispatched from the window object
 	  	}
 	});
 
