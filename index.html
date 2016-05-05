@@ -332,6 +332,31 @@
 				$('#visibility-all').change(function(){
 					showUserUVs(false);						
 				});
+
+				window.addEventListener("keydown",function(e){
+					if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)){
+						e.preventDefault();
+						$('#node-to-search').focus();
+					}
+
+					if(e.ctrlKey && e.keyCode === 96){
+						e.preventDefault();
+						fitSize();
+					}
+
+					if(e.ctrlKey && e.keyCode === 107){
+						e.preventDefault();
+						zoomIn();
+					}
+
+					if(e.ctrlKey && e.keyCode === 109){
+						e.preventDefault();
+						zoomOut();
+					}
+
+					if(e.keyCode === 27)
+						unselectAll();
+				});
 		    });
 		</script>
 	</body>
