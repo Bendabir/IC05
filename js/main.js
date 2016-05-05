@@ -179,6 +179,8 @@ function init(){
 				var toKeep = [],
 					heads = [];
 
+				var message;
+
 				// If no active node
 				if(activeState.nodes().length == 0){
 					// Update color and label
@@ -191,14 +193,16 @@ function init(){
 					s.graph.edges().forEach(function(e){
 						e.color = e.originalColor;
 					});
+
+					message = 'Aucun noeud sélectionné';
+					$('#right-menu-infoUV').html(message);
 				}
 				else{
 					// Display information about the last selected node
-					var message = 'Aucun noeud sélectionné.',
-						selectedNode = activeState.nodes()[activeState.nodes().length - 1];
+					var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
 					if(selectedNode.attributes['Type'] == 'UV') {
 						message = 'Code : ' + selectedNode.id + '<br/>'
-							+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
+							+ 'Nom : ' + selectedNode.attributes['nomUV'] + '<br/>'
 							+ 'Catégorie : ' + selectedNode.attributes['Cat'] + '<br/>'
 							+ 'Nombre de crédits : ' + selectedNode.attributes['nbCredits'];
 						$('#right-menu-infoUV').html(message);
@@ -268,7 +272,7 @@ function init(){
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
-				$('#right-menu-infoUV').html('Aucun noeud sélectionné.');
+				$('#right-menu-infoUV').html('Aucun noeud sélectionné');
 			});
 
 			// Binding some hover event for a fancy cursor
