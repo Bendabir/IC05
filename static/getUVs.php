@@ -1,5 +1,5 @@
 <?php 
-	include("config.php");
+	include(__DIR__ . "config.php");
 
 	if(isset($_GET["login"])){
 		$login = $_GET["login"];

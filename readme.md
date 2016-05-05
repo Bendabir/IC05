@@ -1,1 +1,0 @@
-Platerforme de visualisation du parcours des étudiants.
