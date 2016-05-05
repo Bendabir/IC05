@@ -268,7 +268,7 @@ function init(){
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
-				$('#right-menu-infoUV').html(''); // TODO ajouter au git
+				$('#right-menu-infoUV').html('');
 			});
 
 			// Binding some hover event for a fancy cursor
