@@ -7,7 +7,7 @@ var	s,
 	select,
 	keyboard,
 	filters,
-	locate;
+	locate = null;
 
 // If the user is specified
 if(user != ''){

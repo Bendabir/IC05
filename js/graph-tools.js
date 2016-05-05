@@ -1,3 +1,15 @@
+// Get the IDs of displayed nodes
+function displayedNodes(){
+	var nodes = [];
+
+	s.graph.nodes().forEach(function(n){
+		if(!n.hidden)
+			nodes.push(n.id);
+	});
+
+	return nodes;
+}
+
 // For hidding or not some of nodes
 function applyCategoryFilter(){
 	var filter = $('#node-category').val(),
@@ -17,6 +29,9 @@ function applyCategoryFilter(){
 	}
 	else
 		filters.undo(categories).apply();
+
+	// Zoom on visible nodes
+	locate.nodes(displayedNodes());
 }
 
 // For hiding not without relation with the targeted branch
@@ -54,8 +69,12 @@ function applyBranchFilter(){
 				.apply();
 		}
 	}
-	else
+	else{
 		filters.undo(branchs).apply();
+	}
+
+	// Zoom on visible nodes
+	locate.nodes(displayedNodes());
 }
 
 // Unselect all the nodes
@@ -91,7 +110,9 @@ function locateBranch(branch){
 			nodes.push(n.originalLabel);
 		});
 
-		locate.nodes(nodes);
+		// locate.nodes(nodes);
+		// Zoom on visible nodes
+		locate.nodes(displayedNodes());
 	}
 }
 
@@ -107,6 +128,9 @@ function showUserUVs(show){
 				.apply();
 	else
 		filters.undo('userNodes', 'userEdges').apply();
+
+	// Zoom on visible nodes
+	locate.nodes(displayedNodes());
 }
 
 // To search a node
