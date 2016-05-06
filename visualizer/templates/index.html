@@ -165,9 +165,9 @@
 				<i class="large material-icons">aspect_ratio</i>
 			</a>
 			<ul>
-				<li><a class="btn-floating blue-grey lighten-2" onclick="zoomOut()"><i class="material-icons">remove</i></a></li>
-				<li><a class="btn-floating blue-grey lighten-2" onclick="zoomIn()"><i class="material-icons">add</i></a></li>
-				<li><a class="btn-floating blue-grey lighten-2" onclick="fitSize()"><i class="material-icons">settings_overscan</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2  tooltipped" data-position="left" data-delay="50" data-tooltip="Dézoomer" onclick="zoomOut()"><i class="material-icons">remove</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2  tooltipped" data-position="left" data-delay="50" data-tooltip="Zoomer" onclick="zoomIn()"><i class="material-icons">add</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="50" data-tooltip="Ajuster" onclick="fitSize()"><i class="material-icons">settings_overscan</i></a></li>
 		    </ul>
 		</div>
 
@@ -282,11 +282,12 @@
 					in_duration: 300, // Transition in duration
 					out_duration: 200
 				});
-
 				$('.collapsible').collapsible({
 					accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
 				});
-
+				$('.tooltipped').tooltip({
+					delay: 50
+				});
 
 				// To execute function on enter key press
 				(function($){
