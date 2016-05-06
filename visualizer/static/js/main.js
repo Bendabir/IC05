@@ -83,9 +83,7 @@ function nodeInit (n) {
 }
 
 function isLink (e, node1, node2) {
-	if((e.target === node1 || e.source === node2) && (e.target === node1 || e.source === node2)) {
-		return true;
-	}
+	return (e.target === node1 || e.source === node2) && (e.target === node1 || e.source === node2);
 }
 
 function linkInit (e) {
