@@ -322,8 +322,12 @@
 							var maxLength = (nodes.length > 5) ? 5 : nodes.length;
 
 							for(var i = 0; i < maxLength; i++){
-								var node = s.graph.nodes(nodes[i]);
-								var name = (node.attributes.nomUV) ? '<span> - ' + node.attributes.nomUV + '</span>' : '';
+								var node = s.graph.nodes(nodes[i]),
+									name = '';
+
+								if(node)
+									name = (node.attributes.nomUV) ? '<span style="color: #9E9E9C;" class="truncate">' + node.attributes.nomUV + '</span>' : '';
+
 								$('#dropdown').append('<li><a href="#">' + nodes[i] + name + '</a></li>');
 							}
 						}
