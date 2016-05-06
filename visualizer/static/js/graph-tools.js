@@ -149,6 +149,11 @@ function searchNode(nodeID){
 
 			// Version Raph
 			var searchedNode = s.graph.nodes(nodeID);
+
+			// If node isn't displayed, no search
+			if(searchNode.hidden)
+				return;
+
 			activeState.addNodes(nodeID);
 
 			if (activeState.nodes().length > 1) {// Then use the plugin locate on the activeState.nodes()

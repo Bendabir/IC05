@@ -28,7 +28,10 @@
 						</ul>
 
 						<div class="brand-logo center input-field">
-							<i class="material-icons prefix" style="color: white;">search</i><input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" style="width: 110%;">
+							<a class="dropdown-button" data-activates="dropdown "><i class="material-icons prefix" style="color: white;">search</i><input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" style="width: 110%;"></a>
+
+							<ul id="dropdown" class="dropdown-content" style="margin-top: 15px;">
+							</ul>
 						</div>
 
 						<ul class="right">
@@ -280,11 +283,10 @@
 					out_duration: 200
 				});
 
-				$(document).ready(function(){
-					$('.collapsible').collapsible({
-						accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-					});
+				$('.collapsible').collapsible({
+					accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
 				});
+
 
 				// To execute function on enter key press
 				(function($){
@@ -319,6 +321,27 @@
 				$(function(){
 					$("#node-to-search").onEnter(function(){
 						searchNode($(this).val());
+					});
+
+					// For autocomplete, still buggy
+					$('#node-to-search').on('input', function(){
+						var search = $(this).val(),
+							nodes = tagsForSearchBar.filter(function(n){
+							return n.match(RegExp('^' + search, 'i'));
+						});
+						
+						$('#dropdown').empty();
+						
+						if(search != ''){
+							var maxLength = (nodes.length > 5) ? 5 : nodes.length;
+
+							for(var i = 0; i < maxLength; i++)
+								$('#dropdown').append('<li><a href="#">' + nodes[i] + '</a></li>');
+						}
+					});
+
+					$('#dropdown').on('click', 'li', function(e){
+						searchNode($(this).find('a').text());
 					});
 				});
 
