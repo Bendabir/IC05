@@ -1,10 +1,8 @@
 """ Connection functions """
 
-import json
 import urllib2
 from xml.etree import ElementTree
 
-from django.conf import settings as app_settings
 from django.contrib.auth import get_user_model
 
 from utcaccounts.settings import UTC_CAS_URL
@@ -18,25 +16,6 @@ class CASException(Exception):
 
     def __str__(self):
         return self.message
-
-
-class GingerException(Exception):
-    """ Exception representing a Ginger connection error """
-    def __init__(self, code, message):
-        self.message = message
-        self.code = code
-        super(GingerException, self).__init__()
-
-    def __str__(self):
-        return 'Ginger Exception (' + self.code + ') : ' + self.message
-
-
-def get_ginger_info(login):
-    """ Getting Ginger info """
-    response = urllib2.urlopen(app_settings.GINGER_URL + login + '?key=' + app_settings.GINGER_KEY)
-    if response.getcode() != 200:
-        raise GingerException(response.getcode(), response.read())
-    return json.loads(response.read())
 
 
 def parse_login(xml_info):
@@ -68,10 +47,9 @@ class CASTicket(object):
 
 def user_creation(login):
     """ Function calling Ginger and generating a user based on its login """
-    ginger_answer = get_ginger_info(login)
-    first_name = ginger_answer['prenom']
-    last_name = ginger_answer['nom']
-    email = ginger_answer['mail']
+    first_name = login
+    last_name = login
+    email = login + '@etu.utc.fr'
     user = get_user_model().objects.create(username=login, password=login, email=email,
                                            first_name=first_name, last_name=last_name)
     user.save()
