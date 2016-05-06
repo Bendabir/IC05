@@ -11,11 +11,11 @@ from .utils import CASTicket, user_creation
 
 def home_redirection():
     """ Redirect the user to the homepage. """
-    return redirect('payetonasso.views.home')
+    return redirect('visualizer.views.home')
 
 def dashboard_redirection():
     """ Redirect the user to the dashboard page. """
-    return redirect('payetonasso.views.dashboard')
+    return redirect('visualizer.views.home')
 
 def connexion_cas(request):
     """ Connect the user.
@@ -42,7 +42,7 @@ def connexion_cas(request):
             user = authenticate(username=login_given)
             login(request, user)
         else:
-            return redirect('payetonasso.home', {'deactivated': True})
+            return redirect('visualizer.views.home', {'deactivated': True})
         response = dashboard_redirection()
         return response
 

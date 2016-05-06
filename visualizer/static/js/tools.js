@@ -1,3 +1,5 @@
+'use strict';
+
 // Short function to parse URI
 function parseURI(val) {
     var result = '',
@@ -10,8 +12,9 @@ function parseURI(val) {
         .forEach(function(item){
         	tmp = item.split("=");
         	
-        	if(tmp[0] === val) 
+        	if(tmp[0] === val) {
         		result = decodeURIComponent(tmp[1]);
+            }
     	});
 
     return result;
@@ -28,15 +31,17 @@ function intersect(a, b) {
     }
 
     return a.filter(function (e){
-        if(b.indexOf(e) !== -1) 
+        if(b.indexOf(e) !== -1) { 
         	return true;
+        }
     });
 }
 
 function search(value, key, array){
-	for(var i = 0; i < array.length; i++)
-		if(array[i][key] == value)
+	for(var i = 0; i < array.length; i++) {
+		if(array[i][key] === value) {
 			return true;
-
+        }
+    }
 	return false;
 }

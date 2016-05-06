@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from utcaccounts import views as auth_views
 from visualizer import views as visualizer_views
 
 urlpatterns = [
@@ -23,4 +24,6 @@ urlpatterns = [
     url(r'^$', visualizer_views.home),
     url(r'^getUVs', visualizer_views.student_info),
     url(r'^uvweb', visualizer_views.uvweb_information),
+    url(r'^connection', auth_views.connexion_cas),
+    url(r'^logout', auth_views.deconnexion),
 ]

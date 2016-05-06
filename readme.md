@@ -4,7 +4,7 @@ Plateforme de visualisation du parcours des étudiants.
 
 ## Installation
 
-L'installation requiert [bower](http://bower.io/) et [npm](https://www.npmjs.com/) installés sur votre machine.
+L'installation requiert pip, [bower](http://bower.io/) et [npm](https://www.npmjs.com/) installés sur votre machine. Elle passe par l'installation des dépendances Python et front-end et la création d'un fichier de configuration en fonction de la base de données. 
 
 1. Pour installer les dépendances Python : lancer `pip install -r requirements.txt`. L'utilisation d'un virtualenv avant l'installation des dépendances est recommandée mais n'est pas indispensable. Pour cela, créer un virtualenv avec `virtualenv env`, puis l'activer dans chaque terminal avec `source env/bin/activate`.
 2. Se rendre avec un terminal dans le dossier `visualizer/static`.

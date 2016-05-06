@@ -7,7 +7,6 @@ from xml.etree import ElementTree
 from django.conf import settings as app_settings
 from django.contrib.auth import get_user_model
 
-from ic05backend import settings as app_settings
 from utcaccounts.settings import UTC_CAS_URL
 
 
