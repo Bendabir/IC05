@@ -1,5 +1,9 @@
-var user = parseURI('login'),
-	userUVs = [],
+'use strict';
+
+/* global sigma, user, $, renderGlyphs, renderHalo, search, intersect, parseURI
+   jquery: true */
+
+var userUVs = [],
 	tagsForSearchBar = ['GI', //  - Génie Informatique
 		'GB', // Génie Biologique
 		'GM', // Génie Mécanique
@@ -16,33 +20,85 @@ var	s,
 	filters,
 	locate = null;
 
-// If the user is specified
-if(user != ''){
-	// Getting UVs of the user
-	var xhr = new XMLHttpRequest(),
-		url = document.location.href;
-
-	xhr.open('GET', 'getUVs.php?login=' + user);
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			userUVs = JSON.parse(xhr.responseText);
-
-			// Hiding some things which depends on the user
-			// if(userUVs.length == 0)
-			// 	$('#user-uvs-switch').hide(0);
-
-			init();
-		}
-	};
-
-	xhr.send();
+function uvMessage (selectedNode, uvwebData) {
+	return 'Code : ' + selectedNode.id + '<br/>' +
+		'Nom : ' + (uvwebData ? uvwebData.name : selectedNode.attributes.nomUV) + '<br/>' +
+		'Catégorie : ' + selectedNode.attributes.Cat + '<br/>' +
+		'Nombre de crédits : ' + selectedNode.attributes.nbCredits;
 }
-else{
-	init();
 
-	// Disabling some features
-	$('#visibility-me').prop('disabled', true);
-	$('#visibility-same').prop('disabled', true);
+function changeInfobox () {
+	var message;
+	var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
+	if (selectedNode.attributes.Type === 'UV') {
+		$.ajax('uvweb?uv=' + selectedNode.id, {
+			success: function (uvwebData) {
+				if (uvwebData.note) {
+					message = uvMessage(selectedNode, uvwebData);
+					message += '<br />Note moyenne sur UVWeb : ';
+					message += parseFloat(uvwebData.note).toFixed(2) + '/10';
+				}
+				$('#right-menu-infoUV').html(message);
+			},
+			error: function () {
+				message = uvMessage(selectedNode);
+				$('#right-menu-infoUV').html(message);
+			}
+		});
+	}
+	else {
+		var nbUVs = s.graph.neighbors(selectedNode.id).length;
+		message = '<strong>Semestre</strong> : ' + selectedNode.id + '<br />' +
+					'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
+		$('#right-menu-infoUV').html(message);
+	}
+}
+
+function nodeInit (n) {
+	tagsForSearchBar.push(n.id); // add tags for the autocomplete search
+
+	n.originalColor = n.color;
+	n.originalLabel = n.label;
+	n.disabled = false;
+
+	// Change the shape depending on the node type (UV or Semestre)
+	if(n.attributes.Type === 'Semestre'){
+		n.type = 'equilateral';
+		n.size = 25;
+	} else {
+		n.type = 'circle';
+		n.size = 10;
+		
+		// Adding a glyph for UV
+		n.glyphs = [{
+			'position': 'top-left',
+			'content': n.attributes.Cat, // CS or TM
+			'strokeColor': function(){return this.color;},
+			'threshold': 6,
+			'textThreshold': 1
+		}];
+	}
+}
+
+function isLink (e, node1, node2) {
+	if((e.target === node1 || e.source === node2) && (e.target === node1 || e.source === node2)) {
+		return true;
+	}
+}
+
+function linkInit (e) {
+	// Changing link between uvs from the user and the semester
+	userUVs.forEach(function(data){
+		if (isLink(e, data.uv, data.semestre)) {
+			e.originalColor = "#333";
+			e.color = "#333";
+			e.size = 300;
+			e.user = true;
+		}
+		else {
+			e.originalColor = e.color;
+		}
+	});
 }
 
 function init(){
@@ -134,7 +190,7 @@ function init(){
 	renderGlyphs();
 	renderHalo(userUVs);
 
-	s.renderers[0].bind('render', function(e){
+	s.renderers[0].bind('render', function() {
 		renderGlyphs();
 		renderHalo(userUVs);
 	});
@@ -144,65 +200,28 @@ function init(){
 
 	// Load graph
 	sigma.parsers.json(
-		'data/uvs.json', 
+		'static/data/uvs.json', 
 		s,
 		function(){
 			// Hiding the loader
 			$('#graph-loader').removeClass('active');
 
 			// Saving the color and label then initializing
-			s.graph.nodes().forEach(function(n){
-				tagsForSearchBar.push(n.id); // add tags for the autocomplete search
-
-				n.originalColor = n.color;
-				n.originalLabel = n.label;
-				n.disabled = false;
-
-				// Change the shape depending on the node type (UV or Semestre)
-				if(n.attributes.Type == 'Semestre'){
-					n.type = 'equilateral';
-					n.size = 25;
-				}
-				else{
-					n.type = 'circle';
-					n.size = 10;
-					
-					// Adding a glyph for UV
-					n.glyphs = [{
-						'position': 'top-left',
-						'content': n.attributes.Cat, // CS or TM
-						'strokeColor': function(){return this.color;},
-						'threshold': 6,
-						'textThreshold': 1
-					}];
-				}
-			});
+			s.graph.nodes().forEach(nodeInit);
 			tagsForSearchBar.sort(); // sort the array containing the tags for the autocomplete search bar
 
 
-			s.graph.edges().forEach(function(e){
-				// Changing link between uvs from the user and the semester
-				userUVs.forEach(function(data){
-					if((e.target == data.uv || e.source == data.uv) && (e.target == data.semestre || e.source == data.semestre)){
-						e.originalColor = "#333";
-						e.color = "#333";
-						e.size = 300;
-						e.user = true;
-					}
-					else
-						e.originalColor = e.color;
-				});
-			});
+			s.graph.edges().forEach(linkInit);
 
 			// Binding on selected nodes change (so on node click)
-			activeState.bind('activeNodes', function(e){
+			activeState.bind('activeNodes', function() {
 				var toKeep = [],
 					heads = [];
 
 				var message;
 
 				// If no active node
-				if(activeState.nodes().length == 0){
+				if(activeState.nodes().length === 0) {
 					// Update color and label
 					s.graph.nodes().forEach(function(n){
 						n.color = n.originalColor;
@@ -219,31 +238,18 @@ function init(){
 				}
 				else{
 					// Display information about the last selected node
-					var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
-					if(selectedNode.attributes['Type'] == 'UV') {
-						message = 'Code : ' + selectedNode.id + '<br/>'
-							+ 'Nom : ' + selectedNode.attributes['nomUV'] + '<br/>'
-							+ 'Catégorie : ' + selectedNode.attributes['Cat'] + '<br/>'
-							+ 'Nombre de crédits : ' + selectedNode.attributes['nbCredits'];
-						$('#right-menu-infoUV').html(message);
-					}
-					else {
-						var nbUVs = s.graph.neighbors(selectedNode.id).length;
-						message = 'Semestre : ' + selectedNode.id + '<br />'
-								+ 'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
-						$('#right-menu-infoUV').html(message);
-					}
-
+					changeInfobox(message);
 					// Check other activated nodes 
 					activeState.nodes().forEach(function(n){
 						heads.push(n.id);
 						var neighbors = s.graph.neighbors(n.id);
 
 						// Init the set with all neighbors
-						if(toKeep.length == 0)
+						if(toKeep.length == 0) {
 							toKeep = neighbors;
-						else
+						} else {
 							toKeep = intersect(toKeep, neighbors);
+						}
 					});
 
 					toKeep = toKeep.concat(heads); // Merge arrays
@@ -263,32 +269,16 @@ function init(){
 					});
 
 					s.graph.edges().forEach(function(e){
-						if(toKeep.indexOf(e.source) != -1 && toKeep.indexOf(e.target) != -1)
+						if(toKeep.indexOf(e.source) !== -1 && toKeep.indexOf(e.target) !== -1) {
 							e.color = e.originalColor;
-						else
+						} else {
 							e.color = s.settings('disabledColor');
+						}
 					});
 				}
 
 				s.refresh();
 			});
-
-			// s.bind('clickNode', function (e) {
-			// 	// var message = '';
-			// 	// if (e.data.node.attributes['Type'] == 'UV') {
-			// 	// 	message = 'Code : ' + e.data.node.originalLabel + '<br/>'
-			// 	// 		+ 'Nom : ' + '-----' + '<br/>' // TODO getNomUV from database of add it to the json graph file
-			// 	// 		+ 'Catégorie : ' + e.data.node.attributes['Cat'] + '<br/>'
-			// 	// 		+ 'Nombre de crédits : ' + e.data.node.attributes['nbCredits'];
-			// 	// 	$('#right-menu-infoUV').html(message);
-			// 	// }
-			// 	// else {
-			// 	// 	message = 'Semestre : ' + e.data.node.originalLabel;
-			// 	// 	$('#right-menu-infoUV').html(message);
-			// 	// }
-
-			// 	// s.refresh();
-			// });
 
 			// When clicking outside the graph, getting back to initial state
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
@@ -355,4 +345,32 @@ function init(){
 	locate = sigma.plugins.locate(s, {
 		zoomDef: 2
 	});
+}
+
+// If the user is specified
+if (user){
+	// Getting UVs of the user
+	var xhr = new XMLHttpRequest();
+
+	xhr.open('GET', 'getUVs');
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status === 200) {
+			userUVs = JSON.parse(xhr.responseText);
+
+			// Hiding some things which depends on the user
+			// if(userUVs.length == 0)
+			// 	$('#user-uvs-switch').hide(0);
+
+			init();
+		}
+	};
+
+	xhr.send();
+}
+else {
+	init();
+
+	// Disabling some features
+	$('#visibility-me').prop('disabled', true);
+	$('#visibility-same').prop('disabled', true);
 }
