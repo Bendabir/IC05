@@ -302,23 +302,6 @@
 				})(jQuery);
 
 
-				// autocomplete for the search bar
-//				$("#node-to-search").autocomplete({
-//					source: tagsForSearchBar,
-//					// setting the width of the autocomplete window to the width of the search bar
-//					open: function() {
-//						$("ul.ui-menu").width( $(this).innerWidth() );
-//					},
-//					// call the search function when click on a item in the displayed list
-//					select: function(event, ui) {
-//						if(ui.item){
-//							searchNode(ui.item.value);
-//						}
-//						ui.item.value = ''; // reset the search bar
-//					}
-//				});
-
-
 				// On enter, search the node
 				$(function(){
 					$("#node-to-search").onEnter(function(){
@@ -327,6 +310,7 @@
 
 					// For autocomplete, still buggy
 					$('#node-to-search').on('input', function(){
+						// Look for matching nodes
 						var search = $(this).val(),
 							nodes = tagsForSearchBar.filter(function(n){
 							return n.match(RegExp('^' + search, 'i'));

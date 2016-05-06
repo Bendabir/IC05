@@ -139,43 +139,35 @@ function searchNode(nodeID){
 		$('#graph-container').focus(); // Give the focus to the graph
 	}
 	else {
+		var searchedNode = s.graph.nodes(nodeID);
+
 		// If the node exists
-		if (typeof s.graph.nodes(nodeID) !== 'undefined') {
-			// TODO @Ben : que penses-tu de ma version
-			// Version BEN
-			// activeState.addNodes(nodeID);
-			// locate.nodes(nodeID);
-			// $('#graph-container').attr('tabindex', '0');
+		if (typeof searchedNode !== 'undefined') {
+			if(!searchedNode.hidden){
+				// If node isn't displayed, no search
+				activeState.addNodes(nodeID);
 
-			// Version Raph
-			var searchedNode = s.graph.nodes(nodeID);
-
-			// If node isn't displayed, no search
-			if(searchNode.hidden)
-				return;
-
-			activeState.addNodes(nodeID);
-
-			if (activeState.nodes().length > 1) {// Then use the plugin locate on the activeState.nodes()
-				var nodesInActiveState = [];
-				activeState.nodes().forEach(function(n){
-					nodesInActiveState.push(n.originalLabel);
-				});
-				locate.nodes(nodesInActiveState);
-				/* TODO @Ben : a mon avis, je pense que ajouter petit à petit les nodes recherchée dans l'activeNodes
-					n'est pas forcément une bonne idée, vu qu'à chaque fois ca fait l'intersect et que du coup, c'est
-					peut-être pas ce que voulait l'utilisateur à la base.
-					On pourrait faire un activeState.dropNodes() puis activeState.addNote(nodeID) à chaque fois. Qu'en penses-tu ?
-				 */
+				if (activeState.nodes().length > 1) {// Then use the plugin locate on the activeState.nodes()
+					var nodesInActiveState = [];
+					activeState.nodes().forEach(function(n){
+						nodesInActiveState.push(n.originalLabel);
+					});
+					locate.nodes(nodesInActiveState);
+					/* TODO @Ben : a mon avis, je pense que ajouter petit à petit les nodes recherchée dans l'activeNodes
+						n'est pas forcément une bonne idée, vu qu'à chaque fois ca fait l'intersect et que du coup, c'est
+						peut-être pas ce que voulait l'utilisateur à la base.
+						On pourrait faire un activeState.dropNodes() puis activeState.addNote(nodeID) à chaque fois. Qu'en penses-tu ?
+					 */
+				}
+				else { // Use sigma camera to avoid the strong zoom of the locate plugin when it locates only one node
+					sigma.misc.animation.camera(s.camera, {
+						x: searchedNode.x,
+						y: searchedNode.y,
+						ratio: 0.6
+					});
+				}
+				$('#graph-container').focus(); // Give the focus to the graph
 			}
-			else { // Use sigma camera to avoid the strong zoom of the locate plugin when it locates only one node
-				sigma.misc.animation.camera(s.camera, {
-					x: searchedNode.x,
-					y: searchedNode.y,
-					ratio: 0.6
-				});
-			}
-			$('#graph-container').focus(); // Give the focus to the graph
 		}
 	}
 	$('#node-to-search').val('')
