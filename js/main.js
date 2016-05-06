@@ -84,6 +84,7 @@ function init(){
 		  	labelAlignment: 'inside',
 		  	labelSize: 'proportional',
 		  	labelSizeRatio: 0.49, // the size of the label relativly to the node size
+		  	font: 'Roboto',
 
 		  	// Edges
 		  	defaultEdgeType: 'curve',
