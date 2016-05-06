@@ -83,7 +83,7 @@ function nodeInit (n) {
 }
 
 function isLink (e, node1, node2) {
-	return (e.target === node1 || e.source === node2) && (e.target === node1 || e.source === node2);
+	return (e.target == node1 && e.source == node2) || (e.target == node2 && e.source == node1);
 }
 
 function linkInit (e) {
@@ -209,7 +209,6 @@ function init(){
 			// Saving the color and label then initializing
 			s.graph.nodes().forEach(nodeInit);
 			tagsForSearchBar.sort(); // sort the array containing the tags for the autocomplete search bar
-
 
 			s.graph.edges().forEach(linkInit);
 
