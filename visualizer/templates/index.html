@@ -321,8 +321,11 @@
 						if(search != ''){
 							var maxLength = (nodes.length > 5) ? 5 : nodes.length;
 
-							for(var i = 0; i < maxLength; i++)
-								$('#dropdown').append('<li><a href="#">' + nodes[i] + '</a></li>');
+							for(var i = 0; i < maxLength; i++){
+								var node = s.graph.nodes(nodes[i]);
+								var name = (node.attributes.nomUV) ? '<span> - ' + node.attributes.nomUV + '</span>' : '';
+								$('#dropdown').append('<li><a href="#">' + nodes[i] + name + '</a></li>');
+							}
 						}
 					});
 
