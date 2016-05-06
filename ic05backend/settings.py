@@ -103,10 +103,7 @@ SETTINGS_PARSER = SafeConfigParser()
 SETTINGS_PARSER.read(os.path.dirname(__file__) + '/local_settings.ini')
 
 
-# GINGER INFO
-
-GINGER_URL = 'https://assos.utc.fr/ginger/v1/'
-GINGER_KEY = SETTINGS_PARSER.get('ginger', 'key')
+# AUTH BACKEND
 
 AUTHENTICATION_BACKENDS = (
     'utcaccounts.backend.PayUTCAuthBackend',
@@ -126,7 +123,3 @@ DATABASES = {
         'PORT': SETTINGS_PARSER.get('database', 'port'),
     }
 }
-"""except NoSectionError:
-    raise ImproperlyConfigured("Server settings not defined properly")
-except NoOptionError:
-    raise ImproperlyConfigured("Server settings not defined properly")"""
