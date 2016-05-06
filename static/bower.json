@@ -1,0 +1,26 @@
+{
+  "name": "IC05",
+  "authors": [
+    "Eric Gourlaouen",
+    "Raphael Hammonet",
+    "Benjamin Riviere"
+  ],
+  "description": "Outil de visualisation des UVs",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "none",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "Materialize": "materialize#^0.97.6",
+    "jquery-ui": "^1.11.4"
+  }
+}

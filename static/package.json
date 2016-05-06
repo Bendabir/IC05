@@ -1,0 +1,14 @@
+{
+  "name": "ic05",
+  "version": "1.0.0",
+  "description": "Platerforme de visualisation du parcours des étudiants.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "linkurious": "^1.5.1"
+  }
+}
