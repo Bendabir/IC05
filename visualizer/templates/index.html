@@ -328,13 +328,13 @@
 								if(node)
 									name = (node.attributes.nomUV) ? '<span style="color: #9E9E9C;" class="truncate">' + node.attributes.nomUV + '</span>' : '';
 
-								$('#dropdown').append('<li><a href="#">' + nodes[i] + name + '</a></li>');
+								$('#dropdown').append('<li><a href="#"><span class="node">' + nodes[i] + '</span>' + name + '</a></li>');
 							}
 						}
 					});
 
 					$('#dropdown').on('click', 'li', function(e){
-						searchNode($(this).find('a').text());
+						searchNode($(this).find('a span.node').text());
 					});
 				});
 
