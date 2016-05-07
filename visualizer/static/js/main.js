@@ -221,6 +221,7 @@ function init(){
 
 				// If no active node
 				if(activeState.nodes().length === 0) {
+					console.log('activeState.nodes().length === 0');
 					// Update color and label
 					s.graph.nodes().forEach(function(n){
 						n.color = n.originalColor;
