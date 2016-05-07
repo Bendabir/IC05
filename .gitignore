@@ -1,3 +1,4 @@
+readyToWork.sh
 .idea
 visualizer/static/bower_components/
 visualizer/static/node_modules/
@@ -5,4 +6,3 @@ visualizer/static/node_modules/
 ic05backend/local_settings.ini
 env/
 */.DS_Store
-readyToWork.sh
