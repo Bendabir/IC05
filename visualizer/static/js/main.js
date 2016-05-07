@@ -35,6 +35,7 @@ function changeInfobox () {
 	var message;
 	var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
 	if (selectedNode.attributes.Type === 'UV') {
+		$('#right-menu-infoUV').html('<div class="progress"><div class="indeterminate"></div></div>');
 		$.ajax('uvweb?uv=' + selectedNode.id, {
 			success: function (uvwebData) {
 				message = uvMessage(selectedNode, uvwebData);
