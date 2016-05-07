@@ -2,7 +2,13 @@
 
 """ Modèles disponibles """
 
+from datetime import datetime, timedelta
+
+import pytz
+
 from django.db import models
+
+from ic05backend.middleware.exceptions import APIRequestFailed
 
 from visualizer.api import uvs as api_uvs
 
@@ -33,6 +39,8 @@ class UV(models.Model):
     categorie = models.CharField(max_length=3, null=True, db_column="categorieUV")
     nom = models.CharField(max_length=256, db_column="nomUV")
     credits = models.IntegerField(db_column="nbCreditsUV")
+    note = models.FloatField(null=True)
+    note_last_update = models.DateTimeField(null=True)
 
     def __str__(self):
         """ Printing UV for visualization """
@@ -41,6 +49,27 @@ class UV(models.Model):
     def reviews(self):
         """ Obtenir les avis sur l'UV voulue """
         return api_uvs.get_uvweb_information(self.code)
+
+    def review_update_procedure(self):
+        """ Mettre à jour la note en local """
+        try:
+            info = self.reviews()
+            self.note = info['details']['averageRate']
+            self.note_last_update = datetime.now()
+            self.save()
+        except APIRequestFailed:
+            pass
+
+    def must_update_review(self):
+        """ Renvoie True si la note UVWeb doit être mise à jour
+        - soit parce qu'il n'y en a pas
+        - soit parce ce qu'elle est vieille de plus de 4 semaines """
+        if not self.note:
+            return True
+        utc = pytz.UTC
+        actual_date = self.note_last_update.replace(tzinfo=utc)
+        min_date = (datetime.now() - timedelta(weeks=4)).replace(tzinfo=utc)
+        return actual_date < min_date
 
     class Meta(object):
         """ Modélisation en DB """
