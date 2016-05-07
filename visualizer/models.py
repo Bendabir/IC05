@@ -2,7 +2,9 @@
 
 """ Modèles disponibles """
 
-from datetime import datetime
+from datetime import datetime, timedelta
+
+import pytz
 
 from django.db import models
 
@@ -57,6 +59,17 @@ class UV(models.Model):
             self.save()
         except APIRequestFailed:
             pass
+
+    def must_update_review(self):
+        """ Renvoie True si la note UVWeb doit être mise à jour
+        - soit parce qu'il n'y en a pas
+        - soit parce ce qu'elle est vieille de plus de 4 semaines """
+        if not self.note:
+            return True
+        utc = pytz.UTC
+        actual_date = self.note_last_update.replace(tzinfo=utc)
+        min_date = (datetime.now() - timedelta(weeks=4)).replace(tzinfo=utc)
+        return actual_date < min_date
 
     class Meta(object):
         """ Modélisation en DB """

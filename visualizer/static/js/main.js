@@ -35,8 +35,8 @@ function changeInfobox () {
 	if (selectedNode.attributes.Type === 'UV') {
 		$.ajax('uvweb?uv=' + selectedNode.id, {
 			success: function (uvwebData) {
+				message = uvMessage(selectedNode, uvwebData);
 				if (uvwebData.note) {
-					message = uvMessage(selectedNode, uvwebData);
 					message += '<br />Note moyenne sur UVWeb : ';
 					message += parseFloat(uvwebData.note).toFixed(2) + '/10';
 				}
