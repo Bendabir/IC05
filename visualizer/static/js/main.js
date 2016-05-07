@@ -1,6 +1,6 @@
 'use strict';
 
-/* global sigma, user, $, renderGlyphs, renderHalo, search, intersect, parseURI
+/* global sigma, user, $, renderGlyphs, renderHalo, search, intersect
    jquery: true */
 
 var userUVs = [],
@@ -20,7 +20,9 @@ var	s,
 	select,
 	keyboard,
 	filters,
-	locate = null;
+	locate,
+	design,
+	legend;
 
 function uvMessage (selectedNode, uvwebData) {
 	return 'Code : ' + selectedNode.id + '<br/>' +
@@ -62,6 +64,10 @@ function nodeInit (n) {
 	n.originalColor = n.color;
 	n.originalLabel = n.label;
 	n.disabled = false;
+	n.data = {};
+	n.data.properties = {};
+	n.data.properties.categorie = n.attributes.Type;
+	n.data.properties.couleur = n.originalColor;
 
 	// Change the shape depending on the node type (UV or Semestre)
 	if(n.attributes.Type === 'Semestre'){
@@ -175,6 +181,16 @@ function init(){
 	      	// Others
 	      	disabledColor: '#ddd',
 	      	disabledLabel: '',
+
+	      	// Legends
+  			legendFontFamily: 'Roboto',
+			legendTitleFontFamily: 'Roboto',
+			legendFontColor: '#333',
+			legendTitleFontColor: '#333',
+			legendShapeColor: '#333',
+			legendBorderColor: '#aaa',
+			legendBorderRadius: 3,
+			legendBorderWidth: 0.5,
 
 			// Zoom
 			// The power degrees applied to the nodes / edges size relatively to the zooming level (https://github.com/jacomyal/sigma.js/wiki/Settings#camera-settings)
@@ -350,6 +366,38 @@ function init(){
 	locate = sigma.plugins.locate(s, {
 		zoomDef: 2
 	});
+
+	// For the design plugin
+	var palette = {
+		schemes: {
+			nodeTypeScheme: {
+				Semestre : 'equilateral',
+				UV : 'circle'
+			},
+			nodeTypeScheme: {
+				6 : ['#000', '#000', '#000', '#000', '#000', '#000']
+			}
+		}
+	};
+
+	var styles = {
+		nodes: {
+			type: {
+				by: 'data.properties.categorie',
+				scheme: 'schemes.nodeTypeScheme'
+			}
+		}
+	};	
+
+	// Initialize the Design plugin
+	design = sigma.plugins.design(s, {
+		styles: styles,
+		palette: palette
+	});
+
+	// Initialize the Legend plugin
+	legend = sigma.plugins.legend(s);
+	legend.draw();
 }
 
 // If the user is specified
