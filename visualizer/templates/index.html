@@ -115,7 +115,7 @@
                 <div class="card" id="right-menu">
                     <ul class="collapsible" data-collapsible="expandable">
                         <li>
-                            <div class="collapsible-header active"><i class="material-icons">info_outline</i><b class="truncate">Informations sur l'UV</b></div>
+                            <div class="collapsible-header active"><i class="material-icons">info_outline</i><b class="truncate">Informations</b></div>
                             <div class="collapsible-body">
                                 <p id="right-menu-infoUV">Aucun noeud sélectionné</p>
                             </div>
@@ -274,6 +274,12 @@
 		<script type="text/javascript">
 		  	// Init the select in cards
 		  	$(document).ready(function(){
+		  		// Change property
+		  		if($(window).width() <= 1024){
+		  			$('.col').removeClass('l2').addClass('l3');
+		  			$('.push-l8').removeClass('push-l8').addClass('push-l6');
+		  		}
+
 				$('select').material_select();
 				// $(".button-collapse").sideNav();
 				$('.modal-trigger').leanModal({
@@ -283,7 +289,8 @@
 					out_duration: 200
 				});
 				$('.collapsible').collapsible({
-					accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+					// A setting that changes the collapsible behavior to expandable instead of the default accordion style
+					accordion : $(window).width() <= 992 || $(window).height() <= 768
 				});
 				$('.tooltipped').tooltip({
 					delay: 50

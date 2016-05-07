@@ -1,5 +1,12 @@
 // Get the IDs of displayed nodes
 function displayedNodes(){
+	// s.graph.nodes().map(function(n){
+	// 	if(!n.hidden) 
+	// 		return n.id;
+	// }).filter(function(n){
+	// 	return typeof n != 'undefined';
+	// });
+
 	var nodes = [];
 
 	s.graph.nodes().forEach(function(n){
