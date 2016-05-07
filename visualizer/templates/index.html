@@ -27,11 +27,10 @@
 							<li>UVs</li>
 						</ul>
 
-						<div class="brand-logo center input-field">
+						<div class="brand-logo center input-field" id="searchbar">
 							<a class="dropdown-button" data-activates="dropdown "><i class="material-icons prefix" style="color: white;">search</i><input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" style="width: 110%;"></a>
 
-							<ul id="dropdown" class="dropdown-content" style="margin-top: 60px;">
-							</ul>
+							<ul id="dropdown" class="dropdown-content" style="margin-top: 15px;"></ul>
 						</div>
 
 						<ul class="right">
@@ -167,7 +166,7 @@
 			<ul>
 				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="50" data-tooltip="Dézoomer" onclick="zoomOut()"><i class="material-icons">remove</i></a></li>
 				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="50" data-tooltip="Zoomer" onclick="zoomIn()"><i class="material-icons">add</i></a></li>
-				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="50" data-tooltip="Ajuster" onclick="fitSize()"><i class="material-icons">settings_overscan</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="50" data-tooltip="Ajuster" onclick="fitSize()"><i class="material-icons">fullscreen</i></a></li>
 		    </ul>
 		</div>
 
@@ -289,6 +288,15 @@
 				$('.tooltipped').tooltip({
 					delay: 50
 				});
+				$('.dropdown-button').dropdown({
+					inDuration: 300,
+					outDuration: 225,
+					constrain_width: true, // Does not change width of dropdown to that of the activator
+					hover: false, // Activate on hover
+					gutter: 0, // Spacing from edge
+					belowOrigin: true, // Displays dropdown below the button
+					alignment: 'left' // Displays dropdown with edge aligned to the left of button
+				});
 
 				// To execute function on enter key press
 				(function($){
@@ -301,51 +309,65 @@
 					};
 				})(jQuery);
 
-
-				// On enter, search the node
-				$(function(){
-					$("#node-to-search").onEnter(function(){
-						searchNode($(this).val());
-					});
-
-					// For autocomplete, still buggy
-					$('#node-to-search').on('input', function(){
-						// Look for matching nodes
-						var search = $(this).val(),
-							nodes = tagsForSearchBar.filter(function(n){
-							return n.match(RegExp('^' + search, 'i'));
-						});
-						
-						$('#dropdown').empty();
-						
-						if(search != ''){
-							var maxLength = (nodes.length > 5) ? 5 : nodes.length;
-
-							for(var i = 0; i < maxLength; i++){
-								var node = s.graph.nodes(nodes[i]),
-									name = '';
-
-								if(node)
-									name = (node.attributes.nomUV) ? '<span style="color: #9E9E9C;" class="truncate">' + node.attributes.nomUV + '</span>' : '';
-
-								$('#dropdown').append('<li><a href="#"><span class="node">' + nodes[i] + '</span>' + name + '</a></li>');
-							}
-						}
-					});
-
-					$('#dropdown').on('click', 'li', function(e){
-						searchNode($(this).find('a span.node').text());
-					});
+				// Search
+				$('#node-to-search').onEnter(function(){
+					searchNode($(this).val());
 				});
 
+				// Autocomplete
+				$('#node-to-search').on('input', function(){
+					var search = $(this).val(),
+						// Targeting matching and displayed nodes
+						matchNodes = tagsForSearchBar.filter(function(n){
+							var hidden = false,
+								node = s.graph.nodes(n);
 
+							if(node)
+								hidden = node.hidden;
 
+							return n.match(RegExp('^' + search, 'i')) && !hidden;
+						});
 
-				// Specify a node category
+					$('#dropdown').empty();
+
+					if(search){
+						var maxLength = Math.min(matchNodes.length, 5);
+
+						for(var i = 0; i < maxLength; i++){
+							var node = s.graph.nodes(matchNodes[i]),
+								name = '';
+
+							if(node)
+								name = (node.attributes.nomUV) ? '<span style="color: #9E9E9C;" class="truncate">' + node.attributes.nomUV + '</span>' : '';
+
+							$('#dropdown').append('<li><a href="#"><span class="node">' + matchNodes[i] + '</span>' + name + '</a></li>');
+						}
+					}
+				});
+
+				// On autocomplete element click
+				$('#dropdown').on('click', 'li', function(e){
+					searchNode($(this).find('a span.node').text());
+				});
+
+				// Hide autocomplete on click elsewhere
+				$(document).mouseup(function(e){
+					var searchbar = $('#node-to-search'),
+						dropdown = $('#dropdown');
+
+					// if the target of the click isn't the searchbar nor a descendant of the searchbar or the autocomplete dropdown
+					if(!searchbar.is(e.target) && searchbar.has(e.target).length === 0 && !dropdown.is(e.target) && dropdown.has(e.target).length === 0){
+						dropdown.empty();
+						searchbar.val(''); // Emptying searchbar
+					}
+				});
+
+				// Specify a categorie
 				$('#node-category').change(function(){
 					applyCategoryFilter();
 				});
 
+				// Specify a branch
 				$('#node-branch').change(function(){
 					applyBranchFilter();
 				});
@@ -360,26 +382,31 @@
 
 				// Some new shortcuts
 				window.addEventListener("keydown",function(e){
+					// CTRL + F
 					if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)){
 						e.preventDefault();
 						$('#node-to-search').focus();
 					}
 
+					// CTRL + 0
 					if(e.ctrlKey && e.keyCode === 96){
 						e.preventDefault();
 						fitSize();
 					}
 
+					// CTRL + +
 					if(e.ctrlKey && e.keyCode === 107){
 						e.preventDefault();
 						zoomIn();
 					}
 
+					// CTRL + -
 					if(e.ctrlKey && e.keyCode === 109){
 						e.preventDefault();
 						zoomOut();
 					}
 
+					// Escape
 					if(e.keyCode === 27)
 						unselectAll();
 				});
