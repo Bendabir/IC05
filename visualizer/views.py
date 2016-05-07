@@ -2,7 +2,7 @@
 
 """ Liste des vues du visualiseur """
 
-from django.core.exceptions import FieldError, PermissionDenied
+from django.core.exceptions import FieldError, ObjectDoesNotExist, PermissionDenied
 from django.shortcuts import render
 
 from rest_framework.decorators import api_view, renderer_classes
@@ -35,6 +35,10 @@ def uvweb_information(request):
     if not request.GET.get('uv'):
         raise FieldError('Missing UV')
     uvcode = request.GET['uv']
-    info = get_uvweb_information(uvcode)
-    return Response({'name': UV.objects.get(code=uvcode).nom,
-                     'note': info['details']['averageRate']})
+    try:
+        uv_studied = UV.objects.get(code=uvcode)
+    except UV.DoesNotExist:
+        raise ObjectDoesNotExist('UV pas enregistrée en base')
+    if uv_studied.must_update_review():
+        uv_studied.review_update_procedure()
+    return Response({'name': uv_studied.nom, 'note': uv_studied.note})
