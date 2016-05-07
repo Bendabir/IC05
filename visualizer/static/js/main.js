@@ -39,7 +39,7 @@ function changeInfobox () {
 			success: function (uvwebData) {
 				message = uvMessage(selectedNode, uvwebData);
 				if (uvwebData.note) {
-					message += '<br /><b>Note moyenne sur UVWeb :</b> ';
+					message += '<br /><b>Note moyenne sur <a href="https://assos.utc.fr/uvweb/uv/' + selectedNode.id + '" target="_blank">UVWeb</a> :</b> ';
 					message += parseFloat(uvwebData.note).toFixed(2) + '/10';
 				}
 				$('#right-menu-infoUV').html(message);
