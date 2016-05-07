@@ -5,3 +5,4 @@ visualizer/static/node_modules/
 ic05backend/local_settings.ini
 env/
 */.DS_Store
+readyToWork.sh
