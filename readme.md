@@ -23,6 +23,7 @@ L'installation requiert pip, [bower](http://bower.io/) et [npm](https://www.npmj
 1. Installer psycopg2 avec `pip install psycopg2`.
 2. Utiliser comme variable `engine` dans la configuration : `django.db.backends.postgresql_psycopg2`.
 
+<br/>
 ## Front : Idées de changement et/ou ajout
 
 * **Click droit sur les noeuds**
@@ -58,3 +59,13 @@ L'installation requiert pip, [bower](http://bower.io/) et [npm](https://www.npmj
         * Ce bouton lancera la modal avec l'ensemble des infos d'UVWeb pour l'UV sélectionnée
 * **Affichage des infos lors du clic sur un noeud**
     * Changer l'affichage des infos sur une UV, ce n'est pas très "joli" actuellement
+
+
+<br/>
+## Quelques retours utilisateurs et remarques :
+
+* **Ajouter une légende**
+    * Si on arrive à utiliser le plugin `Legends`
+* **Mettre le nom des membres du groupe sur le site**
+* **Aligner verticalement le champ de recherche avec l'icone de loupe**
+* **Ouvrir directement les deux premiers panneaux du menu de gauche : visualisation et filtres**
