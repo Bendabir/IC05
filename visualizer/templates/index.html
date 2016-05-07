@@ -206,8 +206,8 @@
 					<h5>Commandes</h5>
 
 					<div>
-						<p><kbd>Espace</kbd> + <kbd>Clic gauche</kbd> : Sélectionner plusieurs noeuds</p><br />
 						<p><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> : Se déplacer dans le graphe</p><br />
+						<p><kbd>CTRL</kbd> + <kbd>Clic gauche</kbd> : Sélectionner plusieurs noeuds</p><br />
 						<p><kbd>CTRL</kbd> + <kbd>+</kbd> : Zoomer</p><br />
 						<p><kbd>CTRL</kbd> + <kbd>-</kbd> : Dézoomer</p><br />
 						<p><kbd>CTRL</kbd> + <kbd>0</kbd> : Réinitialiser la vue</p><br />
@@ -409,6 +409,10 @@
 					// Escape
 					if(e.keyCode === 27)
 						unselectAll();
+
+					// CTRL + A
+					if(e.ctrlKey && e.keyCode == 65)
+						e.preventDefault();
 				});
 		    });
 		</script>

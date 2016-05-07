@@ -334,8 +334,13 @@ function init(){
 	// Bind the Keyboard plugin to the Select plugin:
 	select.bindKeyboard(keyboard);
 
-	// Binding space + 0 to reinit zoom
-	keyboard.bind('32+48 32+45 32+96', fitSize);
+	// Unbinding default behavior
+  	keyboard.unbind('18+17+65');
+	keyboard.unbind('17+85 18+17+85');
+	keyboard.unbind('17+46 18+17+46');
+	keyboard.unbind('17+69 18+17+69');
+	keyboard.unbind('17+73 18+17+73');
+	keyboard.unbind('17+76 18+17+76');
 
 	// Initialize the Filter plugin
 	filters = sigma.plugins.filter(s);
