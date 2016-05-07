@@ -25,10 +25,10 @@ var	s,
 	legend;
 
 function uvMessage (selectedNode, uvwebData) {
-	return 'Code : ' + selectedNode.id + '<br/>' +
-		'Nom : ' + (uvwebData ? uvwebData.name : selectedNode.attributes.nomUV) + '<br/>' +
-		'Catégorie : ' + selectedNode.attributes.Cat + '<br/>' +
-		'Nombre de crédits : ' + selectedNode.attributes.nbCredits;
+	return '<b>Code :</b> ' + selectedNode.id + '<br/>' +
+		'<b>Nom :</b> ' + (uvwebData ? uvwebData.name : selectedNode.attributes.nomUV) + '<br/>' +
+		'<b>Catégorie :</b> ' + selectedNode.attributes.Cat + '<br/>' +
+		'<b>Nombre de crédits :</b> ' + selectedNode.attributes.nbCredits;
 }
 
 function changeInfobox () {
@@ -39,7 +39,7 @@ function changeInfobox () {
 			success: function (uvwebData) {
 				message = uvMessage(selectedNode, uvwebData);
 				if (uvwebData.note) {
-					message += '<br />Note moyenne sur UVWeb : ';
+					message += '<br /><b>Note moyenne sur UVWeb :</b> ';
 					message += parseFloat(uvwebData.note).toFixed(2) + '/10';
 				}
 				$('#right-menu-infoUV').html(message);
@@ -52,7 +52,7 @@ function changeInfobox () {
 	}
 	else {
 		var nbUVs = s.graph.neighbors(selectedNode.id).length;
-		message = '<strong>Semestre</strong> : ' + selectedNode.id + '<br />' +
+		message = '<b>Semestre</b> : ' + selectedNode.id + '<br />' +
 					'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
 		$('#right-menu-infoUV').html(message);
 	}
