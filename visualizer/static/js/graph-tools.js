@@ -175,14 +175,15 @@ function searchNode(nodeID){
 
 // For camera handling
 function fitSize(){
-	sigma.misc.animation.camera(s.camera, { 
-		x:0, 
-		y:0,
-		ratio: 1 
-	},
-	{
-		duration: s.settings('mouseZoomDuration')
-	});
+	// sigma.misc.animation.camera(s.camera, { 
+	// 	x:0, 
+	// 	y:0,
+	// 	ratio: 1 
+	// },
+	// {
+	// 	duration: s.settings('mouseZoomDuration')
+	// });
+	locate.nodes(displayedNodes());
 }
 
 function zoomIn(){
