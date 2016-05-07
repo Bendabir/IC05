@@ -237,7 +237,6 @@ function init(){
 
 				// If no active node
 				if(activeState.nodes().length === 0) {
-					console.log('activeState.nodes().length === 0');
 					// Update color and label
 					s.graph.nodes().forEach(function(n){
 						n.color = n.originalColor;
@@ -248,9 +247,6 @@ function init(){
 					s.graph.edges().forEach(function(e){
 						e.color = e.originalColor;
 					});
-
-					message = 'Aucun noeud sélectionné';
-					$('#right-menu-infoUV').html(message);
 				}
 				else{
 					// Display information about the last selected node
@@ -301,6 +297,17 @@ function init(){
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
 				$('#right-menu-infoUV').html('Aucun noeud sélectionné');
+			});
+
+			// When clicking on a node
+			s.bind('clickNode', function (e) {
+				if (activeState.nodes().length === 1) { // then the user either click on a another node or click on the same node
+					// if the user click on the same node, then we must dismiss the informations
+					if (e.data.node === activeState.nodes()[0]) { // here value of activeState.nodes().length is 1
+						// console.log('Déselection du noeud');
+						$('#right-menu-infoUV').html('Aucun noeud sélectionné');
+					}
+				}
 			});
 
 			// Binding some hover event for a fancy cursor
