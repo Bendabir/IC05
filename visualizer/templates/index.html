@@ -53,7 +53,7 @@
 				<div class="card" id="left-menu">
 						<ul class="collapsible" data-collapsible="expandable">
 							<li>
-								<div class="collapsible-header"><i class="material-icons">visibility</i><b class="truncate">Visualisation</b></div>
+								<div class="collapsible-header active"><i class="material-icons">visibility</i><b class="truncate">Visualisation</b></div>
 								<div class="collapsible-body">
 									<p>
 										<input name="visibility-group" type="radio" id="visibility-all" class="with-gap" checked="checked" />
@@ -72,60 +72,43 @@
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header active" id="menu_filtres"><i class="material-icons">sort</i><b class="truncate">Filtres</b></div>
+								<div class="collapsible-header" id="menu_filtres"><i class="material-icons">sort</i><b class="truncate">Filtres</b></div>
 								<div class="collapsible-body" id="menu_filtres_body">
 									<div class="row section"> <!--class section is for top and bottom padding-->
 										<!-- Le label aide à la compréhension mais n'est pas indispensable selon moi -->
 										<div class="center-align section">
-											<label class="truncate">Catégories<br/></label>
+											<label class="truncate"><b>Catégories</b><br/></label>
 										</div>
 										<div class="center-align">
-											<span><a class="btn-floating center-align" id="node_category_All">All</a></span>
+											<span><a class="btn-floating center-align" id="node_category_All">ALL</a></span>
 											<span><a class="btn-floating btn-flat center-align" id="node_category_CS">CS</a></span>
 											<span><a class="btn-floating btn-flat center-align" id="node_category_TM">TM</a></span>
 										</div>
 									</div>
 
+
+
 									<div class="row section"> <!--class section is for top and bottom padding and container is for left end right padding -->
 										<div class="center-align">
-											<label class="truncate">Branches<br/></label>
+											<label class="truncate"><b>Branches</b><br/></label>
 										</div>
-										<div class="center-align container section">
-											<span><a class="btn center-align" id="node_branch_All">All</a></span>
+										<!--<div class="center-align container section">-->
+											<!--<span><a class="btn center-align" id="node_branch_All">All</a></span>-->
+										<!--</div>-->
+										<div class="center-align container">
+											<span><a class="btn-floating center-align" id="node_branch_All">ALL</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_TC">TC</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GSU">GSU</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GP">GP</a></span>
+
 										</div>
 										<div class="center-align">
-											<span><a class="btn-floating center-align green darken-2" id="node_branch_TC">TC</a></span>
-											<span><a class="btn-floating center-align blue" id="node_branch_GI">GI</a></span>
-											<span><a class="btn-floating center-align deep-purple accent-1" id="node_branch_GM">GM</a></span>
-											<span><a class="btn-floating center-align deep-purple accent-1" id="node_branch_GSM">GSM</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GB">GB</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GM">GM</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GSM">GSM</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GI">GI</a></span>
 										</div>
-										<div class="center-align">
-											<span><a class="btn-floating center-align light-green accent-4" id="node_branch_GB">GB</a></span>
-											<span><a class="btn-floating center-align orange" id="node_branch_GP">GP</a></span>
-											<span><a class="btn-floating center-align pink lighten-2" id="node_branch_GSU">GSU</a></span>
-										</div>
-
-
-									<p>
-										<!--<select id="node-category">-->
-											<!--<option value="" disabled selected>Catégorie</option>-->
-											<!--<option value="All">Toutes les catégories</option>-->
-											<!--<option value="CS">Seulement les CS</option>-->
-											<!--<option value="TM">Seulement les TM</option>-->
-										<!--</select>-->
-										<br/><br/><br/>
-										<select id="node-branch">
-											<option value="" disabled selected>Branche</option>
-											<option value="All">Toutes les branches</option>
-											<option value="TC">Tronc Commun</option>
-											<option value="GI">Génie Informatique</option>
-											<option value="GB">Génie Biologique</option>
-											<option value="GM">Génie Mécanique</option>
-											<option value="GSM">Génie des Systèmes Mécaniques</option>
-											<option value="GSU">Génie des Systèmes Urbains</option>
-											<option value="GP">Génie des Procédés</option>
-										</select>
-									</p>
+									</div>
 								</div>
 							</li>
 							<li>
@@ -403,51 +386,7 @@
 					}
 				});
 
-				// Specify a categorie
-				$('#node_category_TM').click(function(){
-					applyCategoryFilter('TM');
-				});
 
-				$('#node_category_CS').click(function(){
-					applyCategoryFilter('CS');
-				});
-
-				$('#node_category_All').click(function(){
-					applyCategoryFilter('All');
-				});
-
-
-
-
-				// Specify a branch
-				$('#node_branch_All').click(function(){
-					applyBranchFilter_Raph('All');
-				});
-				$('#node_branch_TC').click(function(){
-					applyBranchFilter_Raph('TC');
-				});
-				$('#node_branch_GI').click(function(){
-					applyBranchFilter_Raph('GI');
-				});
-				$('#node_branch_GM').click(function(){
-					applyBranchFilter_Raph('GM');
-				});
-				$('#node_branch_GSM').click(function(){
-					applyBranchFilter_Raph('GSM');
-				});
-				$('#node_branch_GB').click(function(){
-					applyBranchFilter_Raph('GB');
-				});
-				$('#node_branch_GSU').click(function(){
-					applyBranchFilter_Raph('GSU');
-				});
-				$('#node_branch_GP').click(function(){
-					applyBranchFilter_Raph('GP');
-				});
-
-				$('#node-branch').change(function(){
-					applyBranchFilter();
-				});
 
 				// Specify the user's UVs
 				$('#visibility-me').change(function(){
@@ -456,6 +395,8 @@
 				$('#visibility-all').change(function(){
 					showUserUVs(false);						
 				});
+
+
 
 
 
@@ -500,5 +441,7 @@
 
 
 		</script>
+
+		<script type="text/javascript" src="{% static 'js/jQuery_Events.js' %}"></script>
 	</body>
 </html>

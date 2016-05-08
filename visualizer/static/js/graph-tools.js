@@ -21,48 +21,6 @@ function displayedNodes(){
 function applyCategoryFilter(filter) {
 	var categories= ['CS', 'TM'];
 
-	// A button with "btn-flat" class is a "non checked" button
-	switch (filter) {
-		case 'CS' :
-			if ( $('#node_category_CS').hasClass('btn-flat') ) {
-				$('#node_category_CS').removeClass('btn-flat');
-			}
-			if ( !$('#node_category_TM').hasClass('btn-flat') ) {
-				$('#node_category_TM').addClass('btn-flat');
-			}
-			if ( !$('#node_category_All').hasClass('btn-flat') ) {
-				$('#node_category_All').addClass('btn-flat');
-			}
-			break;
-
-		case 'TM' :
-			if ( $('#node_category_TM').hasClass('btn-flat') ) {
-				$('#node_category_TM').removeClass('btn-flat');
-			}
-			if ( !$('#node_category_CS').hasClass('btn-flat') ) {
-				$('#node_category_CS').addClass('btn-flat');
-			}
-			if ( !$('#node_category_All').hasClass('btn-flat') ) {
-				$('#node_category_All').addClass('btn-flat');
-			}
-			break;
-
-		case 'All' :
-			if ( $('#node_category_All').hasClass('btn-flat') ) {
-				$('#node_category_All').removeClass('btn-flat');
-			}
-			if ( !$('#node_category_TM').hasClass('btn-flat') ) {
-				$('#node_category_TM').addClass('btn-flat');
-			}
-			if ( !$('#node_category_CS').hasClass('btn-flat') ) {
-				$('#node_category_CS').addClass('btn-flat');
-			}
-			break;
-
-		default :
-			break;
-	}
-
 	if(filter != 'All' && filter != ''){
 		if(!search(filter, 'key', filters.serialize())){
 			filters.undo(categories.filter(function(e){
@@ -83,51 +41,8 @@ function applyCategoryFilter(filter) {
 }
 
 // For hiding not without relation with the targeted branch
-function applyBranchFilter(){
-	var filter = $('#node-branch').val(),
-		branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'],
-		semesters = [],
-		toKeep = [];
-
-	if(filter != 'All' && filter != ''){
-		if(!search(filter, 'key', filters.serialize())){
-			// Generate root nodes
-			for(var i = 1; i <= 6; i++)
-				semesters.push(filter + '0' + i);
-
-			// Undo all other branch filters (showing nodes again)
-			filters.undo(branchs.filter(function(e){
-				return e != filter;
-			})).apply();
-
-			// Get nodes linked to the branch
-			semesters.forEach(function(node){
-				s.graph.neighbors(node).forEach(function(n){
-					if(toKeep.indexOf(n) == -1)
-						toKeep.push(n);
-				});
-			});
-
-			toKeep = toKeep.concat(semesters);
-
-			filters
-				.nodesBy(function(n){
-					return toKeep.indexOf(n.id) != -1;
-				}, filter)
-				.apply();
-		}
-	}
-	else{
-		filters.undo(branchs).apply();
-	}
-
-	// Zoom on visible nodes
-	locate.nodes(displayedNodes());
-}
-
-function applyBranchFilter_Raph(filter){
-	var branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'],
-		semesters = [],
+function applyBranchFilter(filter){
+	var semesters = [],
 		toKeep = [];
 
 	if(filter != 'All' && filter != ''){
