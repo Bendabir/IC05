@@ -48,7 +48,7 @@ L'installation requiert pip, [bower](http://bower.io/) et [npm](https://www.npmj
 * **Ajouter des possibilités de paramétrage dans la modal "Paramètres"**
     * Multi-sélection donne l'intersection mais peut aussi donner l'union
     * ...
-* **Interaction avec le graphe lors de la construction de parcours**
+* **Interaction avec le graphe lors de la construction de parcours (voir issue n°6)**
     * Penser différement l'intéraction sur le graphe quand un étudiant veut construire son parcours futur
     * Par exemple, il veut regarder les UVs qu'il prendra en GI04 :
         * Il clique sur GI04 pour voir les UVs qui sont prises en général lors de ce semestre
