@@ -24,35 +24,65 @@ var	s,
 	design,
 	legend;
 
-function generateStars(note){
-	var maxNote = 10,
-		minNote = 0,
+// Generate a number of star icons according to the grade
+function generateStars(grade){
+	var maxGrade = 10,
+		minGrade = 0,
 		ratio = 2,
 		stars = '';
 
-	Math.round(note);
-	note /= ratio;	
+	if(grade >= minGrade && grade <= maxGrade){
+		// Converting the grade out of 5
+		grade = Math.round(grade);
+		grade /= ratio;
 
-	for(var i = minNote; i < Math.floor(note); i++)
-		stars += '<i class="material-icons">star</i>';
-
-	if(Math.round(note % 2) == 1 && Math.floor(note) < 5)
-		stars += '<i class="material-icons">star_half</i>';
-
-	if(Math.round(note % 2) < 1 && Math.floor(note) < 5)
-		stars += '<i class="material-icons">star_border</i>';
-
-	for(var i = Math.floor(note) + 1; i < maxNote / ratio; i++)
-		stars += '<i class="material-icons">star_border</i>';
-
+		// Generating icons
+		stars += '<i class="material-icons">star</i>'.repeat(grade);
+		stars += '<i class="material-icons">star_half</i>'.repeat(Math.round(grade - Math.floor(grade)));
+		stars += '<i class="material-icons">star_border</i>'.repeat(Math.floor(maxGrade / ratio - grade));
+	}
+	
 	return stars;
 }
 
 function uvMessage (selectedNode, uvwebData) {
-	return '<b>Code :</b> ' + selectedNode.id + '<br/>' +
-		'<b>Nom :</b> ' + (uvwebData ? uvwebData.name : selectedNode.attributes.nomUV) + '<br/>' +
-		'<b>Catégorie :</b> ' + selectedNode.attributes.Cat + '<br/>' +
-		'<b>Nombre de crédits :</b> ' + selectedNode.attributes.nbCredits;
+	var message = '<ul class="collection">';
+			message += '<li class="collection-item center-align"><h5>' + selectedNode.id + ' - ' + selectedNode.attributes.nomUV + '</h5></li>';
+			message += '<li class="collection-item">';
+				message +=	'<div class="row">';
+					message +=	'<div class="col s6 center-align">';
+						message +=	'<b>Note sur UVWeb</b><br>';
+						message +=	'<div>' + (uvwebData ? generateStars(parseFloat(uvwebData.note)) : 'Note indisponible') + '</div>';
+						message +=	'</div>';
+							message +=	'<div class="col s6 center-align">';
+								message +=	'<b>Taux de réussite</b><br />';
+								message +=	'<div>00,00% </div>';
+							message +=	'</div>';
+						message +=	'</div>';
+				message +=	'</div>';
+			message +=	'</li>';
+			message += '<li class="collection-item" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia augue sed tellus luctus, a cursus enim suscipit. Phasellus laoreet blandit arcu fringilla tincidunt. Proin sit amet euismod magna. Cras luctus at arcu sed vehicula. Fusce ut ex molestie, bibendum turpis eget, congue tortor. Nulla sed sapien et justo faucibus mattis. Vestibulum blandit justo ac nisi lacinia tristique. Pellentesque eros lorem, facilisis a risus eget, porttitor interdum tellus. Proin sagittis lacus eu tellus pulvinar mattis.</li>';
+			message +=	'<li class="collection-item">';
+				message +=	'<div class="row">';
+					message +=	'<div class="col s3 center-align">';
+						message +=	'<i class="material-icons">class</i><br><div>' + selectedNode.attributes.Cat + '</div>';
+					message +=	'</div>';
+					message +=	'<div class="col s3 center-align">';
+						message +=	'<i class="material-icons">school</i><br><div>' + selectedNode.attributes.nbCredits + ' ECTS</div>';
+					message +=	'</div>';
+					message += '<div class="col s3 center-align">';
+						message +=	'<i class="material-icons">group</i><br><div>XX étudiants</div>';
+					message +=	'</div>';
+						message +=	'<div class="col s3 center-align"><i class="material-icons">access_time</i><br><div>XXXXXXXX</div>';
+					message +=	'</div>';
+				message +=	'</div>';
+			message +=	'</li>';
+			message +=	'<li class="collection-item">';
+				message +=	'<div>Ajouter à mon parcours <a href="#" class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div>';
+			message +=	'</li>';
+		message += '</ul>';
+
+	return message;
 }
 
 function changeInfobox () {
@@ -63,10 +93,6 @@ function changeInfobox () {
 		$.ajax('uvweb?uv=' + selectedNode.id, {
 			success: function (uvwebData) {
 				message = uvMessage(selectedNode, uvwebData);
-				if (uvwebData.note) {
-					message += '<br /><b>Note moyenne sur <a href="https://assos.utc.fr/uvweb/uv/' + selectedNode.id + '" target="_blank">UVWeb</a> :</b> ';
-					message += parseFloat(uvwebData.note).toFixed(2) + '/10';
-				}
 				$('#right-menu-infoUV').html(message);
 			},
 			error: function () {
