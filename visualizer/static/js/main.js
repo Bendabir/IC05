@@ -52,7 +52,7 @@ function uvMessage (selectedNode, uvwebData) {
 				message +=	'<div class="row">';
 					message +=	'<div class="col s6 center-align">';
 						message +=	'<b>Note sur UVWeb</b><br>';
-						message +=	'<div>' + (uvwebData ? generateStars(parseFloat(uvwebData.note)) : 'Note indisponible') + '</div>';
+						message +=	'<div>' + (uvwebData.note ? generateStars(parseFloat(uvwebData.note)) : 'Note indisponible') + '</div>';
 						message +=	'</div>';
 							message +=	'<div class="col s6 center-align">';
 								message +=	'<b>Taux de réussite</b><br />';
@@ -78,7 +78,7 @@ function uvMessage (selectedNode, uvwebData) {
 				message +=	'</div>';
 			message +=	'</li>';
 			message +=	'<li class="collection-item">';
-				message +=	'<div>Ajouter à mon parcours <a href="#" class="secondary-content"><i class="material-icons">add_circle_outline</i></a></div>';
+				message +=	'<div><button class="btn">Ajouter à mon parcours</button></div>';
 			message +=	'</li>';
 		message += '</ul>';
 
