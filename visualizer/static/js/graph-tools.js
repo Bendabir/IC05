@@ -18,9 +18,8 @@ function displayedNodes(){
 }
 
 // For hidding or not some of nodes
-function applyCategoryFilter(){
-	var filter = $('#node-category').val(),
-		categories= ['CS', 'TM'];
+function applyCategoryFilter(filter) {
+	var categories= ['CS', 'TM'];
 
 	if(filter != 'All' && filter != ''){
 		if(!search(filter, 'key', filters.serialize())){
@@ -42,10 +41,8 @@ function applyCategoryFilter(){
 }
 
 // For hiding not without relation with the targeted branch
-function applyBranchFilter(){
-	var filter = $('#node-branch').val(),
-		branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'],
-		semesters = [],
+function applyBranchFilter(filter){
+	var semesters = [],
 		toKeep = [];
 
 	if(filter != 'All' && filter != ''){
@@ -65,7 +62,7 @@ function applyBranchFilter(){
 					if(toKeep.indexOf(n) == -1)
 						toKeep.push(n);
 				});
-			})
+			});
 
 			toKeep = toKeep.concat(semesters);
 

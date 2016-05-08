@@ -25,3 +25,9 @@ function search(value, key, array){
     }
 	return false;
 }
+
+// May be useful for later : i have done some tests via the JS console and
+// materialize add/remove the active class when we click on a collapsible header
+function collapsibleOpen(divID) {
+    return $('#' + divID).hasClass('active');
+}

@@ -26,7 +26,6 @@
 						<ul class="brand-logo left" style="padding-left: 10px;">
 							<li>UVs</li>
 						</ul>
-
 						<div class="brand-logo center input-field" id="searchbar">
 							<a class="dropdown-button" data-activates="dropdown "><i class="material-icons prefix" style="color: white;">search</i><input placeholder="Rechercher un noeud, une branche..." id="node-to-search" type="text" class="validate white-text" style="width: 110%;"></a>
 
@@ -36,7 +35,11 @@
 						<ul class="right">
 							<li><a href="#options-modal" class="modal-trigger"><i class="material-icons">settings</i></a></li>
 							<li><a href="#about-modal" class="modal-trigger"><i class="material-icons">help_outline</i></a></li>
-							{% if not logged %}<li><a href="connection">Connexion<i class="material-icons right">account_circle</i></a></li>{% else %}<li><a href="logout">Déconnexion<i class="material-icons right">clear</i></a></li>{% endif %}
+							{% if not logged %}
+								<li><a href="connection">Connexion<i class="material-icons right">account_circle</i></a></li>
+							{% else %}
+								<li><a href="logout">Déconnexion ({{user.first_name}})<i class="material-icons right">clear</i></a></li>
+							{% endif %}
 						</ul>
 					</div>
 				</nav>
@@ -59,10 +62,9 @@
 										<input name="visibility-group" type="radio" id="visibility-all" class="with-gap" checked="checked" />
 										<label for="visibility-all">Tout</label>
 										<br />
-										<input name="visibility-group" type="radio" id="visibility-me" class="with-gap" />
+										<input name="visibility-group" type="radio" id="visibility-me" class="with-gap"/>
 										<label for="visibility-me">Mon parcours
-											{% if logged %}({{user.first_name}} {{user.last_name}})
-											{% else %}(Réservé aux étudiants connectés)
+											{% if not logged %}(Connectez-vous)
 											{% endif %}
 										</label>
 										<br />
@@ -72,28 +74,41 @@
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header"><i class="material-icons">sort</i><b class="truncate">Filtres</b></div>
-								<div class="collapsible-body">
-									<p>
-										<select id="node-category">
-											<option value="" disabled selected>Catégorie</option>
-											<option value="All">Toutes les catégories</option>
-											<option value="CS">Seulement les CS</option>
-											<option value="TM">Seulement les TM</option>
-										</select>
+								<div class="collapsible-header" id="menu_filtres"><i class="material-icons">sort</i><b class="truncate">Filtres</b></div>
+								<div class="collapsible-body" id="menu_filtres_body">
 
-										<select id="node-branch">
-											<option value="" disabled selected>Branche</option>
-											<option value="All">Toutes les branches</option>
-											<option value="TC">Tronc Commun</option>
-											<option value="GI">Génie Informatique</option>
-											<option value="GB">Génie Biologique</option>
-											<option value="GM">Génie Mécanique</option>
-											<option value="GSM">Génie des Systèmes Mécaniques</option>
-											<option value="GSU">Génie des Systèmes Urbains</option>
-											<option value="GP">Génie des Procédés</option>
-										</select>
-									</p>
+
+									<div class="row">
+										<div class="container section">  <!--class section is for top and bottom padding-->
+											<label class="truncate"><b>Catégories</b></label>
+										</div>
+										<div class="container">
+											<span><a class="btn-floating center-align" id="node_category_All"><i class="material-icons center-align">visibility_off</i></a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_category_CS">CS</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_category_TM">TM</a></span>
+
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="container section">  <!--class section is for top and bottom padding and container is for left end right padding -->
+											<label class="truncate"><b>Branches</b><br/></label>
+										</div>
+										<div class="center-align container">
+											<span><a class="btn-floating center-align" id="node_branch_All"><i class="material-icons center-align">visibility_off</i></a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_TC">TC</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GSU">GSU</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GP">GP</a></span>
+
+										</div>
+										<div class="center-align">
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GB">GB</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GM">GM</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GSM">GSM</a></span>
+											<span><a class="btn-floating btn-flat center-align" id="node_branch_GI">GI</a></span>
+										</div>
+									</div>
 								</div>
 							</li>
 							<li>
@@ -116,8 +131,8 @@
                     <ul class="collapsible" data-collapsible="expandable">
                         <li>
                             <div class="collapsible-header active"><i class="material-icons">info_outline</i><b class="truncate">Informations</b></div>
-                            <div class="collapsible-body">
-                                <p id="right-menu-infoUV">Aucun noeud sélectionné</p>
+                            <div class="collapsible-body center-align">
+                                <div id="right-menu-infoUV">Aucun noeud sélectionné</div>
                             </div>
                         </li>
                         <li>
@@ -337,6 +352,8 @@
 
 					$('#dropdown').empty();
 
+
+
 					if(search){
 						var maxLength = Math.min(matchNodes.length, 5);
 
@@ -369,23 +386,6 @@
 					}
 				});
 
-				// Specify a categorie
-				$('#node-category').change(function(){
-					applyCategoryFilter();
-				});
-
-				// Specify a branch
-				$('#node-branch').change(function(){
-					applyBranchFilter();
-				});
-
-				// Specify the user's UVs
-				$('#visibility-me').change(function(){
-					showUserUVs(true);						
-				});
-				$('#visibility-all').change(function(){
-					showUserUVs(false);						
-				});
 
 				// Some new shortcuts
 				window.addEventListener("keydown",function(e){
@@ -422,6 +422,10 @@
 						e.preventDefault();
 				});
 		    });
+
+
 		</script>
+
+		<script type="text/javascript" src="{% static 'js/jQuery_Events.js' %}"></script>
 	</body>
 </html>
