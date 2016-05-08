@@ -51,7 +51,7 @@ function uvMessage (selectedNode, uvwebData) {
 			message += '<li class="collection-item">';
 				message +=	'<div class="row">';
 					message +=	'<div class="col s6 center-align">';
-						message +=	'<b>Note sur UVWeb</b><br>';
+						message +=	'<b>Note sur <a href="https://assos.utc.fr/uvweb/uv/' + selectedNode.id + '" target="_blank">UVWeb</a></b><br>';
 						message +=	'<div>' + (uvwebData.note ? generateStars(parseFloat(uvwebData.note)) : 'Note indisponible') + '</div>';
 						message +=	'</div>';
 							message +=	'<div class="col s6 center-align">';
