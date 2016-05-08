@@ -11,6 +11,12 @@ var branchColor = {
 var branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'];
 
 
+
+// ===========================================================================================
+//                           Functions used in this file
+// ===========================================================================================
+
+
 // Function that "hide" and "show" properly the "All", "CS" and "TM" buttons
 function filterType_CS_TM_Buttons_ShowAndHide (filter) {
     switch (filter) {
@@ -73,8 +79,16 @@ function filterBranchButtons_ShowAndHide (filter) {
     // Add it's color to it
     $('#node_branch_' + filter).addClass(branchColor[filter]);
 }
+
+
+
+
+
+
+
+
 // ===========================================================================================
-// Specify a categorie CS or TM in order to filter the nodes
+//              Specify a categorie CS or TM in order to filter the nodes
 // ===========================================================================================
 
 $('#node_category_TM').click(function(){
@@ -96,7 +110,7 @@ $('#node_category_All').click(function(){
 
 
 // ===========================================================================================
-// Specify a branch in order to filter the nodes
+//                      Specify a branch in order to filter the nodes
 // ===========================================================================================
 $('#node_branch_All').click(function(){
     filterBranchButtons_ShowAndHide('All');
@@ -200,4 +214,16 @@ $('#node_branch_GP').mouseleave(function (e) {
     }
 });
 
+
+
 // ===========================================================================================
+//                          Specify the user's UVs
+// ===========================================================================================
+
+
+$('#visibility-me').change(function(){
+    showUserUVs(true);
+});
+$('#visibility-all').change(function(){
+    showUserUVs(false);
+});
