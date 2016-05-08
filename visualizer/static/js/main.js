@@ -24,6 +24,30 @@ var	s,
 	design,
 	legend;
 
+function generateStars(note){
+	var maxNote = 10,
+		minNote = 0,
+		ratio = 2,
+		stars = '';
+
+	Math.round(note);
+	note /= ratio;	
+
+	for(var i = minNote; i < Math.floor(note); i++)
+		stars += '<i class="material-icons">star</i>';
+
+	if(Math.round(note % 2) == 1 && Math.floor(note) < 5)
+		stars += '<i class="material-icons">star_half</i>';
+
+	if(Math.round(note % 2) < 1 && Math.floor(note) < 5)
+		stars += '<i class="material-icons">star_border</i>';
+
+	for(var i = Math.floor(note) + 1; i < maxNote / ratio; i++)
+		stars += '<i class="material-icons">star_border</i>';
+
+	return stars;
+}
+
 function uvMessage (selectedNode, uvwebData) {
 	return '<b>Code :</b> ' + selectedNode.id + '<br/>' +
 		'<b>Nom :</b> ' + (uvwebData ? uvwebData.name : selectedNode.attributes.nomUV) + '<br/>' +
