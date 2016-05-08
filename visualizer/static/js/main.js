@@ -24,27 +24,24 @@ var	s,
 	design,
 	legend;
 
-function generateStars(note){
-	var maxNote = 10,
-		minNote = 0,
+// Generate a number of star icons according to the grade
+function generateStars(grade){
+	var maxGrade = 10,
+		minGrade = 0,
 		ratio = 2,
 		stars = '';
 
-	Math.round(note);
-	note /= ratio;	
+	if(grade >= minGrade && grade <= maxGrade){
+		// Converting the grade out of 5
+		grade = Math.round(grade);
+		grade /= ratio;
 
-	for(var i = minNote; i < Math.floor(note); i++)
-		stars += '<i class="material-icons">star</i>';
-
-	if(Math.round(note % 2) == 1 && Math.floor(note) < 5)
-		stars += '<i class="material-icons">star_half</i>';
-
-	if(Math.round(note % 2) < 1 && Math.floor(note) < 5)
-		stars += '<i class="material-icons">star_border</i>';
-
-	for(var i = Math.floor(note) + 1; i < maxNote / ratio; i++)
-		stars += '<i class="material-icons">star_border</i>';
-
+		// Generating icons
+		stars += '<i class="material-icons">star</i>'.repeat(grade);
+		stars += '<i class="material-icons">star_half</i>'.repeat(Math.round(grade - Math.floor(grade)));
+		stars += '<i class="material-icons">star_border</i>'.repeat(Math.floor(maxGrade / ratio - grade));
+	}
+	
 	return stars;
 }
 
@@ -65,7 +62,7 @@ function changeInfobox () {
 				message = uvMessage(selectedNode, uvwebData);
 				if (uvwebData.note) {
 					message += '<br /><b>Note moyenne sur <a href="https://assos.utc.fr/uvweb/uv/' + selectedNode.id + '" target="_blank">UVWeb</a> :</b> ';
-					message += parseFloat(uvwebData.note).toFixed(2) + '/10';
+					message += generateStars(parseFloat(uvwebData.note));
 				}
 				$('#right-menu-infoUV').html(message);
 			},
