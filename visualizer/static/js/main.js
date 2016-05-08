@@ -71,9 +71,9 @@ function uvMessage (selectedNode, uvwebData) {
 						message +=	'<i class="material-icons">school</i><br><div>' + selectedNode.attributes.nbCredits + ' ECTS</div>';
 					message +=	'</div>';
 					message += '<div class="col s3 center-align">';
-						message +=	'<i class="material-icons">group</i><br><div>XX étudiants</div>';
+						message +=	'<i class="material-icons">group</i><br><div>Effectif</div>';
 					message +=	'</div>';
-						message +=	'<div class="col s3 center-align"><i class="material-icons">access_time</i><br><div>XXXXXXXX</div>';
+						message +=	'<div class="col s3 center-align"><i class="material-icons">access_time</i><br><div>Semestre</div>';
 					message +=	'</div>';
 				message +=	'</div>';
 			message +=	'</li>';
