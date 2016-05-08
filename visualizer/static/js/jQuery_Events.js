@@ -9,7 +9,8 @@ var branchColor = {
         'All' : ''
     };
 var branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'];
-
+var categories = ['CS', 'TM'];
+var classColorForAllButton = 'blue-grey lighten-3'
 
 
 // ===========================================================================================
@@ -19,60 +20,37 @@ var branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'];
 
 // Function that "hide" and "show" properly the "All", "CS" and "TM" buttons
 function filterType_CS_TM_Buttons_ShowAndHide (filter) {
-    switch (filter) {
-        case 'CS' :
-            if ( $('#node_category_CS').hasClass('btn-flat') ) {
-                $('#node_category_CS').removeClass('btn-flat');
-            }
-            if ( !$('#node_category_TM').hasClass('btn-flat') ) {
-                $('#node_category_TM').addClass('btn-flat');
-            }
-            if ( !$('#node_category_All').hasClass('btn-flat') ) {
-                $('#node_category_All').addClass('btn-flat');
-            }
-            break;
+    // add btn-flat class to all buttons
+    categories.forEach(function (code) {
+        $('#node_category_' + code).addClass('btn-flat');
+    });
 
-        case 'TM' :
-            if ( $('#node_category_TM').hasClass('btn-flat') ) {
-                $('#node_category_TM').removeClass('btn-flat');
-            }
-            if ( !$('#node_category_CS').hasClass('btn-flat') ) {
-                $('#node_category_CS').addClass('btn-flat');
-            }
-            if ( !$('#node_category_All').hasClass('btn-flat') ) {
-                $('#node_category_All').addClass('btn-flat');
-            }
-            break;
-
-        case 'All' :
-            if ( $('#node_category_All').hasClass('btn-flat') ) {
-                $('#node_category_All').removeClass('btn-flat');
-            }
-            if ( !$('#node_category_TM').hasClass('btn-flat') ) {
-                $('#node_category_TM').addClass('btn-flat');
-            }
-            if ( !$('#node_category_CS').hasClass('btn-flat') ) {
-                $('#node_category_CS').addClass('btn-flat');
-            }
-            break;
-
-        default :
-            break;
+    if (filter == 'All') { // enlever la "décoloration"
+        $('#node_category_All').removeClass(classColorForAllButton);
     }
+    else { // ajouter la "décoloration"
+        $('#node_category_All').addClass(classColorForAllButton);
+    }
+    // remove btn-flat class to the button clicked
+    $('#node_category_' + filter).removeClass('btn-flat');
 }
 
 
 // Function that "hide" and "show" properly the buttons used to filter the graph by branch
 function filterBranchButtons_ShowAndHide (filter) {
     // "Hide" all buttons by adding the "btn-flat" class (no need to test if the component already has the class, jQuery do not duplicate
-
     branchs.forEach(function (code) {
         $('#node_branch_' + code).addClass('btn-flat');
         $('#node_branch_' + code).removeClass(branchColor[code]); // remove color to the one previously "active" by removing to all
     });
 
     // To hide the "All" button by adding the "btn-flat"
-    $('#node_branch_All').addClass('btn-flat');
+    if (filter == 'All') { // enlever la "décoloration"
+        $('#node_branch_All').removeClass(classColorForAllButton);
+    }
+    else { // ajouter la "décoloration"
+        $('#node_branch_All').addClass(classColorForAllButton);
+    }
 
     // "Show" the button just clicked by removing the "btn-flat" class
     $('#node_branch_' + filter).removeClass('btn-flat');
