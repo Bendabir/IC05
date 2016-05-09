@@ -78,6 +78,8 @@ function uvMessage (selectedNode, uvwebData) {
 				message +=	'</div>';
 			message +=	'</li>';
 			message +=	'<li class="collection-item">';
+				message += '<button class="btn">Ajouter à mon parcours</button>';
+			message +=	'</li>';
 		message += '</ul>';
 
 	return message;
