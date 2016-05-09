@@ -283,12 +283,12 @@ function init(){
 			// Binding on selected nodes change (so on node click)
 			activeState.bind('activeNodes', function() {
 				var toKeep = [],
-					heads = [];
+					roots = [];
 
 				var message;
 
 				// If no active node
-				if(activeState.nodes().length === 0) {
+				if(activeState.nodes().length == 0) {
 					// Update color and label
 					s.graph.nodes().forEach(function(n){
 						n.color = n.originalColor;
@@ -305,18 +305,18 @@ function init(){
 					changeInfobox(message);
 					// Check other activated nodes 
 					activeState.nodes().forEach(function(n){
-						heads.push(n.id);
+						roots.push(n.id);
 						var neighbors = s.graph.neighbors(n.id);
 
 						// Init the set with all neighbors
-						if(toKeep.length == 0) {
+						if(toKeep.length == 0)
 							toKeep = neighbors;
-						} else {
+						else
 							toKeep = intersect(toKeep, neighbors);
-						}
+
+						toKeep = toKeep.concat(roots); // Merge arrays
 					});
 
-					toKeep = toKeep.concat(heads); // Merge arrays
 
 					// Update color
 					s.graph.nodes().forEach(function(n){

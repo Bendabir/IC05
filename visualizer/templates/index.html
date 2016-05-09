@@ -318,7 +318,7 @@
 		<script type="text/javascript">
 		  	// Init the select in cards
 		  	$(document).ready(function(){
-		  		// Change property
+		  		// Change property in a dirty way
 		  		if($(window).width() <= 1024){
 		  			$('.col').removeClass('l2').addClass('l3');
 		  			$('.push-l8').removeClass('push-l8').addClass('push-l6');
@@ -380,8 +380,6 @@
 						});
 
 					$('#dropdown').empty();
-
-
 
 					if(search){
 						var maxLength = Math.min(matchNodes.length, 5);
@@ -451,8 +449,6 @@
 						e.preventDefault();
 				});
 		    });
-
-
 		</script>
 
 		<script type="text/javascript" src="{% static 'js/jQuery_Events.js' %}"></script>

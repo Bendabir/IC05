@@ -1,20 +1,12 @@
 // Get the IDs of displayed nodes
 function displayedNodes(){
-	// s.graph.nodes().map(function(n){
-	// 	if(!n.hidden) 
-	// 		return n.id;
-	// }).filter(function(n){
-	// 	return typeof n != 'undefined';
-	// });
-
-	var nodes = [];
-
-	s.graph.nodes().forEach(function(n){
-		if(!n.hidden)
-			nodes.push(n.id);
-	});
-
-	return nodes;
+	return s.graph.nodes()
+				.filter(function(n){
+					return !n.hidden;
+				})
+				.map(function(n){
+					return n.id;
+				});
 }
 
 // For hidding or not some of nodes
@@ -23,10 +15,10 @@ function applyCategoryFilter(filter) {
 
 	if(categories.indexOf(filter) != -1){
 		if(!search(filter, 'key', filters.serialize())){
-			filters.undo(categories.filter(function(e){
-				return e != filter;
-			})).apply();
 			filters
+				.undo(categories.filter(function(e){
+					return e != filter;
+				}))
 				.nodesBy(function(n){
 					return n.attributes.Type != 'UV' || n.attributes.Cat == filter;
 				}, filter)
@@ -53,9 +45,11 @@ function applyBranchFilter(filter){
 				semesters.push(filter + '0' + i);
 
 			// Undo all other branch filters (showing nodes again)
-			filters.undo(branchs.filter(function(e){
-				return e != filter;
-			})).apply();
+			filters
+				.undo(branchs.filter(function(e){
+					return e != filter;
+				}))
+				.apply();
 
 			// Get nodes linked to the branch
 			semesters.forEach(function(node){
