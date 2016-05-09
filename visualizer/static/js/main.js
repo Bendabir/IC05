@@ -78,8 +78,6 @@ function uvMessage (selectedNode, uvwebData) {
 				message +=	'</div>';
 			message +=	'</li>';
 			message +=	'<li class="collection-item">';
-				message +=	'<div><button class="btn">Ajouter à mon parcours</button></div>';
-			message +=	'</li>';
 		message += '</ul>';
 
 	return message;
@@ -89,7 +87,7 @@ function changeInfobox () {
 	var message;
 	var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
 	if (selectedNode.attributes.Type === 'UV') {
-		$('#right-menu-infoUV').html('<div class="progress"><div class="indeterminate"></div></div>');
+		$('#right-menu-infoUV').html('<div class="container"><div class="progress"><div class="indeterminate"></div></div></div>');
 		$.ajax('uvweb?uv=' + selectedNode.id, {
 			success: function (uvwebData) {
 				message = uvMessage(selectedNode, uvwebData);
