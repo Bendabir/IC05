@@ -17,11 +17,9 @@ function intersect(a, b) {
 }
 
 function search(value, key, array){
-	for(var i = 0; i < array.length; i++) {
-		if(array[i][key] == value)
-			return true;
-    }
-	return false;
+    return array.filter(function(e){
+        return e[key] == value;
+    }).length;
 }
 
 // May be useful for later : i have done some tests via the JS console and

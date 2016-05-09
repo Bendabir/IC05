@@ -13,11 +13,13 @@ function displayedNodes(){
 function applyCategoryFilter(filter) {
 	var categories= ['CS', 'TM'];
 
+	// If the filter exists
 	if(categories.indexOf(filter) != -1){
-		if(!search(filter, 'key', filters.serialize())){
+		// If the filter is not active
+		if(search(filter, 'key', filters.serialize()) == 0){
 			filters
-				.undo(categories.filter(function(e){
-					return e != filter;
+				.undo(categories.filter(function(f){
+					return f != filter;
 				}))
 				.nodesBy(function(n){
 					return n.attributes.Type != 'UV' || n.attributes.Cat == filter;
@@ -26,7 +28,7 @@ function applyCategoryFilter(filter) {
 		}
 	}
 	else
-		filters.undo(categories).apply();
+		filters.undo(categories).apply(); // Else undo all the filters
 
 	// Zoom on visible nodes
 	locate.nodes(displayedNodes());
@@ -39,7 +41,7 @@ function applyBranchFilter(filter){
 		branchs = ['TC', 'GI', 'GSU', 'GM', 'GSM', 'GP', 'GB'];
 
 	if(branchs.indexOf(filter) != -1){
-		if(!search(filter, 'key', filters.serialize())){
+		if(search(filter, 'key', filters.serialize()) == 0){
 			// Generate root nodes
 			for(var i = 1; i <= 6; i++)
 				semesters.push(filter + '0' + i);
@@ -117,7 +119,7 @@ function showUserUVs(show){
 	if(show)	
 		filters
 				.nodesBy(function(n){
-					return search(n.originalLabel, 'semestre', userUVs) || n.user;
+					return search(n.originalLabel, 'semestre', userUVs) > 0 || n.user;
 				}, 'userNodes')
 				.edgesBy(function(e){
 					return e.user;
