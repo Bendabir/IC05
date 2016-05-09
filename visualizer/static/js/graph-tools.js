@@ -1,16 +1,18 @@
 // Get the IDs of displayed nodes
 function displayedNodes(){
 	return s.graph.nodes()
-				.filter(function(n){
-					return !n.hidden;
+				.filter(function(n){ /* filter() constructs a new array of all the values for which the
+										callback function returns a true value */
+					return !n.hidden; // so we get here all the nodes not hidden
 				})
-				.map(function(n){
-					return n.id;
+				.map(function(n){ /* map calls a provided callback function once for each element in an array,
+										in order, and constructs a new array from the results */
+					return n.id; // so we get the array of all nodes.id not hidden
 				});
 }
 
 // For hidding or not some of nodes
-function applyCategoryFilter(filter) {
+function applyCategoryFilter(filter, useLocate) {
 	var categories= ['CS', 'TM'];
 
 	// If the filter exists
@@ -31,13 +33,19 @@ function applyCategoryFilter(filter) {
 		filters.undo(categories).apply(); // Else undo all the filters
 
 	// Zoom on visible nodes
-	locate.nodes(displayedNodes());
+	if (useLocate == undefined) { // then classic call from the CS/TM filter menu
+		locate.nodes(displayedNodes());
+	}
+	/* The only call to applyCategoryFilter with useLocate defined (to false) is in the
+		applyBranchFilter (see there for more details) */
 }
 
 // For hiding not without relation with the targeted branch
 function applyBranchFilter(filter){
-	var semesters = [],
+	var filter_CS_or_TM_toReapply = '',
+		semesters = [],
 		toKeep = [],
+		categories= ['CS', 'TM'],
 		branchs = ['TC', 'GI', 'GSU', 'GM', 'GSM', 'GP', 'GB'];
 
 	if(branchs.indexOf(filter) != -1){
@@ -53,7 +61,21 @@ function applyBranchFilter(filter){
 				}))
 				.apply();
 
-			// Get nodes linked to the branch
+
+			/* Before we get nodes linked to the branch, we need to unhidden the possibles UVs nodes
+				previously hidden by the CS/TM filter.
+					Because, the s.graph.neighbors function will only get the non hidden neighbors */
+			categories.forEach(function (cat) {
+				if (search(cat, 'key', filters.serialize()) == 1) {
+					filter_CS_or_TM_toReapply = cat;
+				}
+			});
+			/* Undo temporarily the categiry filter if one is active :
+					here, filter_CS_or_TM_toReapply value is '', 'CS' or 'TM' and applying undo on '' (empty string)
+					don't change a thing, so no need for a conditionnal statement "if" */
+			filters.undo(filter_CS_or_TM_toReapply).apply();
+
+			// Get ALL the nodes linked to the branch (including the nodes previously hidden)
 			semesters.forEach(function(node){
 				s.graph.neighbors(node).forEach(function(n){
 					if(toKeep.indexOf(n) == -1)
@@ -63,6 +85,13 @@ function applyBranchFilter(filter){
 
 			toKeep = toKeep.concat(semesters);
 
+
+			// Apply filters
+			// Reapply filter on the nodes categorie if there was one. Here too, applying a filter on '' don't change a thing
+			applyCategoryFilter(filter_CS_or_TM_toReapply, false); /* false in second parameter to avoid the double zoom :
+																		the one from applyCategoryFilter and the one at the end
+																		 of this function */
+			// apply new branch filter :
 			filters
 				.nodesBy(function(n){
 					return toKeep.indexOf(n.id) != -1;
