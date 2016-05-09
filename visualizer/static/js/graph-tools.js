@@ -21,11 +21,11 @@ function displayedNodes(){
 function applyCategoryFilter(filter) {
 	var categories= ['CS', 'TM'];
 
-	if(filter != 'All' && filter != ''){
+	if(categories.indexOf(filter) != -1){
 		if(!search(filter, 'key', filters.serialize())){
 			filters.undo(categories.filter(function(e){
 				return e != filter;
-			}));
+			})).apply();
 			filters
 				.nodesBy(function(n){
 					return n.attributes.Type != 'UV' || n.attributes.Cat == filter;
@@ -43,9 +43,10 @@ function applyCategoryFilter(filter) {
 // For hiding not without relation with the targeted branch
 function applyBranchFilter(filter){
 	var semesters = [],
-		toKeep = [];
+		toKeep = [],
+		branchs = ['TC', 'GI', 'GSU', 'GM', 'GSM', 'GP', 'GB'];
 
-	if(filter != 'All' && filter != ''){
+	if(branchs.indexOf(filter) != -1){
 		if(!search(filter, 'key', filters.serialize())){
 			// Generate root nodes
 			for(var i = 1; i <= 6; i++)

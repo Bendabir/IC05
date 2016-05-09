@@ -103,8 +103,9 @@ function changeInfobox () {
 	}
 	else {
 		var nbUVs = s.graph.neighbors(selectedNode.id).length;
-		message = '<b>Semestre</b> : ' + selectedNode.id + '<br />' +
+		message = '<p><b>Semestre</b> : ' + selectedNode.id + '<br />' +
 					'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
+		message += '</p>';
 		$('#right-menu-infoUV').html(message);
 	}
 }
@@ -115,10 +116,10 @@ function nodeInit (n) {
 	n.originalColor = n.color;
 	n.originalLabel = n.label;
 	n.disabled = false;
-	n.data = {};
-	n.data.properties = {};
-	n.data.properties.categorie = n.attributes.Type;
-	n.data.properties.couleur = n.originalColor;
+	// n.data = {};
+	// n.data.properties = {};
+	// n.data.properties.categorie = n.attributes.Type;
+	// n.data.properties.couleur = n.originalColor;
 
 	// Change the shape depending on the node type (UV or Semestre)
 	if(n.attributes.Type === 'Semestre'){
@@ -347,7 +348,7 @@ function init(){
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
-				$('#right-menu-infoUV').html('Aucun noeud sélectionné');
+				$('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
 			});
 
 			// When clicking on a node
@@ -356,7 +357,7 @@ function init(){
 					// if the user click on the same node, then we must dismiss the informations
 					if (e.data.node === activeState.nodes()[0]) { // here value of activeState.nodes().length is 1
 						// console.log('Déselection du noeud');
-						$('#right-menu-infoUV').html('Aucun noeud sélectionné');
+						$('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
 					}
 				}
 			});
