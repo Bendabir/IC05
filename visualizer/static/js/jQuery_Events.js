@@ -63,6 +63,76 @@ function filterBranchButtons_ShowAndHide (filter) {
 
 
 
+// ===========================================================================================
+//              Collapse or expand all in the left menu
+// ===========================================================================================
+
+// Collapse all in left menu
+$('#left_menu_collapse_all').click(function(){
+    var menu_visualisation_header = $('#menu_visualisation_header');
+    var menu_filtres_header = $('#menu_filtres_header');
+    var menu_parcours_header = $('#menu_parcours_header');
+
+    if (collapsibleOpen('menu_visualisation_header')) {
+        menu_visualisation_header.click();
+    }
+    if (collapsibleOpen('menu_filtres_header')) {
+        menu_filtres_header.click();
+    }
+    if (collapsibleOpen('menu_parcours_header')) {
+        menu_parcours_header.click();
+    }
+});
+
+// Expand all in left menu
+$('#left_menu_expand_all').click(function(){
+    var menu_visualisation_header = $('#menu_visualisation_header');
+    var menu_filtres_header = $('#menu_filtres_header');
+    var menu_parcours_header = $('#menu_parcours_header');
+
+    if (!collapsibleOpen('menu_visualisation_header')) {
+        menu_visualisation_header.click();
+    }
+    if (!collapsibleOpen('menu_filtres_header')) {
+        menu_filtres_header.click();
+    }
+    if (!collapsibleOpen('menu_parcours_header')) {
+        menu_parcours_header.click();
+    }
+});
+
+
+
+// ===========================================================================================
+//              Collapse or expand all in the right menu
+// ===========================================================================================
+
+// Collapse all in right menu
+$('#right_menu_collapse_all').click(function(){
+    var menu_infos_header = $('#menu_infos_header');
+    var menu_details_parcours_header = $('#menu_details_parcours_header');
+
+    if (collapsibleOpen('menu_infos_header')) {
+        menu_infos_header.click();
+    }
+    if (collapsibleOpen('menu_details_parcours_header')) {
+        menu_details_parcours_header.click();
+    }
+});
+
+// Expand all in right menu
+$('#right_menu_expand_all').click(function(){
+    var menu_infos_header = $('#menu_infos_header');
+    var menu_details_parcours_header = $('#menu_details_parcours_header');
+
+    if (!collapsibleOpen('menu_infos_header')) {
+        menu_infos_header.click();
+    }
+    if (!collapsibleOpen('menu_details_parcours_header')) {
+        menu_details_parcours_header.click();
+    }
+});
+
 
 
 // ===========================================================================================

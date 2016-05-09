@@ -56,7 +56,23 @@
 				<div class="card" id="left-menu">
 						<ul class="collapsible" data-collapsible="expandable">
 							<li>
-								<div class="collapsible-header active"><i class="material-icons">visibility</i><b class="truncate">Visualisation</b></div>
+								<div class="collapsible-header">
+									<div class="container">
+										<div class="col s6 center-align">
+											<a class="center-align tooltipped" data-position="right" data-delay="1300" data-tooltip="Ouvrir le menu" id="left_menu_expand_all">
+												<i class="material-icons">expand_more</i>
+											</a>
+										</div>
+										<div class="col s6 center-align">
+											<a class="center-align tooltipped" data-position="right" data-delay="1300" data-tooltip="Fermer le menu" id="left_menu_collapse_all">
+												<i class="material-icons">expand_less</i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header active" id="menu_visualisation_header"><i class="material-icons">visibility</i><b class="truncate">Visualisation</b></div>
 								<div class="collapsible-body">
 									<p>
 										<input name="visibility-group" type="radio" id="visibility-all" class="with-gap" checked="checked" />
@@ -74,7 +90,7 @@
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header" id="menu_filtres"><i class="material-icons">sort</i><b class="truncate">Filtres</b></div>
+								<div class="collapsible-header" id="menu_filtres_header"><i class="material-icons">sort</i><b class="truncate">Filtres</b></div>
 								<div class="collapsible-body" id="menu_filtres_body">
 
 
@@ -105,10 +121,11 @@
 											<span><a class="btn-floating btn-flat center-align tooltipped" data-position="bottom" data-delay="1300" data-tooltip="Afficher uniquement le GSM" id="node_branch_GSM">GSM</a></span>
 											<span><a class="btn-floating btn-flat center-align tooltipped" data-position="bottom" data-delay="1300" data-tooltip="Afficher uniquement le GI" id="node_branch_GI">GI</a></span>
 										</div>
+									</div>
 								</div>
 							</li>
 							<li>
-								<div class="collapsible-header"><i class="material-icons">timeline</i><b class="truncate">Mes parcours</b></div>
+								<div class="collapsible-header" id="menu_parcours_header"><i class="material-icons">timeline</i><b class="truncate">Mes parcours</b></div>
 								<div class="collapsible-body">
 									<ul class="collection">
 										<li class="collection-item truncate"><div>Parcours 1<a href="#!" class="secondary-content"><i class="material-icons" style="margin-right: 10px;">build</i><i class="material-icons">delete</i></a></div></li>
@@ -125,14 +142,30 @@
             <div class="col s3 m3 l3 push-s6 push-m6 push-l7">
                 <div class="card" id="right-menu">
                     <ul class="collapsible" data-collapsible="expandable">
+						<li>
+							<div class="collapsible-header">
+								<div class="container center-align">
+									<div class="col s6 center-align">
+										<a class="center-align tooltipped" data-position="right" data-delay="1300" data-tooltip="Ouvrir le menu" id="right_menu_expand_all">
+											<i class="material-icons">expand_more</i>
+										</a>
+									</div>
+									<div class="col s6 center-align">
+											<a class="center-align tooltipped" data-position="right" data-delay="1300" data-tooltip="Fermer le menu" id="right_menu_collapse_all">
+												<i class="material-icons">expand_less</i>
+											</a>
+									</div>
+								</div>
+							</div>
+						</li>
                         <li>
-                            <div class="collapsible-header active"><i class="material-icons">info_outline</i><b class="truncate">Informations</b></div>
+                            <div class="collapsible-header active" id="menu_infos_header"><i class="material-icons">info_outline</i><b class="truncate">Informations</b></div>
                             <div class="collapsible-body center-align">
                                 <div id="right-menu-infoUV">Aucun noeud sélectionné</div>
                             </div>
                         </li>
                         <li>
-                            <div class="collapsible-header"><i class="material-icons">sort</i><b class="truncate">Détails parcours</b></div>
+                            <div class="collapsible-header" id="menu_details_parcours_header"><i class="material-icons">sort</i><b class="truncate">Détails parcours</b></div>
                             <div class="collapsible-body">
                                 <p>Lorem ipsum dolor sit amet.</p>
                             </div>
@@ -296,8 +329,8 @@
 				$('.modal-trigger').leanModal({
 					dismissible: true, // Modal can be dismissed by clicking outside of the modal
 					opacity: .5, // Opacity of modal background
-					in_duration: 300, // Transition in duration
-					out_duration: 200
+					in_duration: 20, // Transition in duration
+					out_duration: 20
 				});
 				$('.collapsible').collapsible({
 					// A setting that changes the collapsible behavior to expandable instead of the default accordion style
