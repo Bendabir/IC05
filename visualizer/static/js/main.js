@@ -46,6 +46,8 @@ function generateStars(grade){
 }
 
 function uvMessage (selectedNode, uvwebData) {
+	uvwebData.desc = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia augue sed tellus luctus, a cursus enim suscipit. Phasellus laoreet blandit arcu fringilla tincidunt. Proin sit amet euismod magna. Cras luctus at arcu sed vehicula. Fusce ut ex molestie, bibendum turpis eget, congue tortor. Nulla sed sapien et justo faucibus mattis. Vestibulum blandit justo ac nisi lacinia tristique. Pellentesque eros lorem, facilisis a risus eget, porttitor interdum tellus. Proin sagittis lacus eu tellus pulvinar mattis.';
+
 	var message = '<ul class="collection">';
 			message += '<li class="collection-item center-align"><h5>' + selectedNode.id + ' - ' + selectedNode.attributes.nomUV + '</h5></li>';
 			message += '<li class="collection-item">';
@@ -61,7 +63,7 @@ function uvMessage (selectedNode, uvwebData) {
 						message +=	'</div>';
 				message +=	'</div>';
 			message +=	'</li>';
-			message += '<li class="collection-item" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia augue sed tellus luctus, a cursus enim suscipit. Phasellus laoreet blandit arcu fringilla tincidunt. Proin sit amet euismod magna. Cras luctus at arcu sed vehicula. Fusce ut ex molestie, bibendum turpis eget, congue tortor. Nulla sed sapien et justo faucibus mattis. Vestibulum blandit justo ac nisi lacinia tristique. Pellentesque eros lorem, facilisis a risus eget, porttitor interdum tellus. Proin sagittis lacus eu tellus pulvinar mattis.</li>';
+			message += '<li class="collection-item" style="text-align: justify;">' + uvwebData.desc.replace(/^(.{500}[^\s]*).*/, "$1") + '... <a href="#">Lire la suite</a></li>';
 			message +=	'<li class="collection-item">';
 				message +=	'<div class="row">';
 					message +=	'<div class="col s3 center-align">';
@@ -77,7 +79,7 @@ function uvMessage (selectedNode, uvwebData) {
 					message +=	'</div>';
 				message +=	'</div>';
 			message +=	'</li>';
-			message +=	'<li class="collection-item">';
+			message +=	'<li class="collection-item center-align">';
 				message += '<button class="btn">Ajouter à mon parcours</button>';
 			message +=	'</li>';
 		message += '</ul>';
@@ -89,25 +91,30 @@ function changeInfobox () {
 	var message;
 	var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
 	if (selectedNode.attributes.Type === 'UV') {
-		$('#right-menu-infoUV').html('<div class="container"><div class="progress"><div class="indeterminate"></div></div></div>');
+		// $('#right-menu-infoUV').html('<div class="container"><div class="progress"><div class="indeterminate"></div></div></div>');
 		$.ajax('uvweb?uv=' + selectedNode.id, {
 			success: function (uvwebData) {
 				message = uvMessage(selectedNode, uvwebData);
 				$('#right-menu-infoUV').html(message);
+				$('#right-menu').show();		
 			},
 			error: function () {
 				message = uvMessage(selectedNode);
 				$('#right-menu-infoUV').html(message);
+				$('#right-menu').show();		
 			}
 		});
 	}
-	else {
-		var nbUVs = s.graph.neighbors(selectedNode.id).length;
-		message = '<p><b>Semestre</b> : ' + selectedNode.id + '<br />' +
-					'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
-		message += '</p>';
-		$('#right-menu-infoUV').html(message);
-	}
+	else
+		$('#right-menu').hide();
+
+	// else {
+	// 	var nbUVs = s.graph.neighbors(selectedNode.id).length;
+	// 	message = '<p><b>Semestre</b> : ' + selectedNode.id + '<br />' +
+	// 				'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
+	// 	message += '</p>';
+	// 	$('#right-menu-infoUV').html(message);
+	// }
 }
 
 function nodeInit (n) {
@@ -348,7 +355,8 @@ function init(){
 			// No need to reinit the nodes/edges or to refresh because the handler on actives nodes is doing it
 			s.bind('clickStage', function(e){
 				activeState.dropNodes(); // Unselect all nodes
-				$('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
+				// $('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
+				$('#right-menu').hide();
 			});
 
 			// When clicking on a node
@@ -356,8 +364,9 @@ function init(){
 				if (activeState.nodes().length === 1) { // then the user either click on a another node or click on the same node
 					// if the user click on the same node, then we must dismiss the informations
 					if (e.data.node === activeState.nodes()[0]) { // here value of activeState.nodes().length is 1
+						$('#right-menu').hide();
 						// console.log('Déselection du noeud');
-						$('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
+						// $('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
 					}
 				}
 			});
