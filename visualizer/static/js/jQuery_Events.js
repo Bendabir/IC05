@@ -10,7 +10,7 @@ var branchColor = {
     };
 var branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'];
 var categories = ['CS', 'TM'];
-var classColorForAllButton = 'blue-grey lighten-3'
+var classColorForResetFilterButton = 'blue-grey lighten-3';
 
 
 // ===========================================================================================
@@ -26,10 +26,10 @@ function filterType_CS_TM_Buttons_ShowAndHide (filter) {
     });
 
     if (filter == 'All') { // enlever la "décoloration"
-        $('#node_category_All').removeClass(classColorForAllButton);
+        $('#node_category_All').removeClass(classColorForResetFilterButton);
     }
     else { // ajouter la "décoloration"
-        $('#node_category_All').addClass(classColorForAllButton);
+        $('#node_category_All').addClass(classColorForResetFilterButton);
     }
     // remove btn-flat class to the button clicked
     $('#node_category_' + filter).removeClass('btn-flat');
@@ -46,10 +46,10 @@ function filterBranchButtons_ShowAndHide (filter) {
 
     // To hide the "All" button by adding the "btn-flat"
     if (filter == 'All') { // enlever la "décoloration"
-        $('#node_branch_All').removeClass(classColorForAllButton);
+        $('#node_branch_All').removeClass(classColorForResetFilterButton);
     }
     else { // ajouter la "décoloration"
-        $('#node_branch_All').addClass(classColorForAllButton);
+        $('#node_branch_All').addClass(classColorForResetFilterButton);
     }
 
     // "Show" the button just clicked by removing the "btn-flat" class
