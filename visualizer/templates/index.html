@@ -126,9 +126,7 @@
             <div class="col s3 m3 l3 push-s6 push-m6 push-l7">
                 <div class="card" id="right-menu">
                 	<div class="card" id="right-menu-infoUV">
-                		<ul class="collection">
-                			
-                		</ul>
+                		<ul class="collection"></ul>
 					</div>
                 </div>
             </div>
@@ -277,14 +275,10 @@
 		<script type="text/javascript">
 		  	// Init the select in cards
 		  	$(document).ready(function(){
-		  		// Change property in a dirty way
-		  		if($(window).width() <= 1024){
-		  			$('.col').removeClass('l2').addClass('l3');
-		  			$('.push-l8').removeClass('push-l8').addClass('push-l6');
-		  		}
+		  		// Hidding right panel
+				$('#right-menu').hide();
 
 				$('select').material_select();
-				// $(".button-collapse").sideNav();
 				$('.modal-trigger').leanModal({
 					dismissible: true, // Modal can be dismissed by clicking outside of the modal
 					opacity: .5, // Opacity of modal background

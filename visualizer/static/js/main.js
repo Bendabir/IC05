@@ -48,9 +48,9 @@ function generateStars(grade){
 function uvMessage (selectedNode, uvwebData) {
 	uvwebData.desc = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lacinia augue sed tellus luctus, a cursus enim suscipit. Phasellus laoreet blandit arcu fringilla tincidunt. Proin sit amet euismod magna. Cras luctus at arcu sed vehicula. Fusce ut ex molestie, bibendum turpis eget, congue tortor. Nulla sed sapien et justo faucibus mattis. Vestibulum blandit justo ac nisi lacinia tristique. Pellentesque eros lorem, facilisis a risus eget, porttitor interdum tellus. Proin sagittis lacus eu tellus pulvinar mattis.';
 
-	var message = '<ul class="collection">';
-			message += '<li class="collection-item center-align"><h5>' + selectedNode.id + ' - ' + selectedNode.attributes.nomUV + '</h5></li>';
-			message += '<li class="collection-item">';
+	// var message = '<ul class="collection">';
+			// message += '<li class="collection-item center-align"><h5>' + selectedNode.id + ' - ' + selectedNode.attributes.nomUV + '</h5></li>';
+		var message = '<li class="collection-item">';
 				message +=	'<div class="row">';
 					message +=	'<div class="col s6 center-align">';
 						message +=	'<b>Note sur <a href="https://assos.utc.fr/uvweb/uv/' + selectedNode.id + '" target="_blank">UVWeb</a></b><br>';
@@ -82,7 +82,7 @@ function uvMessage (selectedNode, uvwebData) {
 			message +=	'<li class="collection-item center-align">';
 				message += '<button class="btn">Ajouter à mon parcours</button>';
 			message +=	'</li>';
-		message += '</ul>';
+		// message += '</ul>';
 
 	return message;
 }
@@ -90,31 +90,30 @@ function uvMessage (selectedNode, uvwebData) {
 function changeInfobox () {
 	var message;
 	var selectedNode = activeState.nodes()[activeState.nodes().length - 1];
-	if (selectedNode.attributes.Type === 'UV') {
-		// $('#right-menu-infoUV').html('<div class="container"><div class="progress"><div class="indeterminate"></div></div></div>');
+	if (selectedNode.attributes.Type === 'UV'){
+		$('#right-menu-infoUV ul.collection').empty();
+		// Setting UV name and a loader
+		$('#right-menu-infoUV ul.collection').append('<li class="collection-item center-align"><h5>' + selectedNode.id + ' - ' + selectedNode.attributes.nomUV + '</h5></li>');
+		$('#right-menu-infoUV ul.collection').append('<li class="collection" id="uv-progress"><div class="progress"><div class="indeterminate"></div></div></li>');
 		$.ajax('uvweb?uv=' + selectedNode.id, {
 			success: function (uvwebData) {
+				$('#uv-progress').remove();
 				message = uvMessage(selectedNode, uvwebData);
-				$('#right-menu-infoUV').html(message);
+				$('#right-menu-infoUV ul.collection').append(message);
 				$('#right-menu').show();		
 			},
 			error: function () {
+				$('#uv-progress').remove();
 				message = uvMessage(selectedNode);
-				$('#right-menu-infoUV').html(message);
+				$('#right-menu-infoUV ul.collection').append(message);
 				$('#right-menu').show();		
 			}
 		});
 	}
-	else
+	else{
 		$('#right-menu').hide();
-
-	// else {
-	// 	var nbUVs = s.graph.neighbors(selectedNode.id).length;
-	// 	message = '<p><b>Semestre</b> : ' + selectedNode.id + '<br />' +
-	// 				'En lien avec ' + nbUVs + ' UV' + ((nbUVs > 1) ? 's' : '');
-	// 	message += '</p>';
-	// 	$('#right-menu-infoUV').html(message);
-	// }
+		$('#right-menu-infoUV ul.collection').empty();
+	}
 }
 
 function nodeInit (n) {
@@ -357,6 +356,7 @@ function init(){
 				activeState.dropNodes(); // Unselect all nodes
 				// $('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
 				$('#right-menu').hide();
+				$('#right-menu-infoUV ul.collection').empty();				
 			});
 
 			// When clicking on a node
@@ -365,6 +365,7 @@ function init(){
 					// if the user click on the same node, then we must dismiss the informations
 					if (e.data.node === activeState.nodes()[0]) { // here value of activeState.nodes().length is 1
 						$('#right-menu').hide();
+						$('#right-menu-infoUV ul.collection').empty();				
 						// console.log('Déselection du noeud');
 						// $('#right-menu-infoUV').html('<p>Aucun noeud sélectionné</p>');
 					}
