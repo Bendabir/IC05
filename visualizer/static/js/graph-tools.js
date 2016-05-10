@@ -148,7 +148,7 @@ function showUserUVs(show){
 	if(show)	
 		filters
 				.nodesBy(function(n){
-					return search(n.id, 'semestre', userUVs) == 1 || n.user;
+					return search(n.id, 'semestre', userUVs) > 0 || n.user;
 				}, 'userNodes')
 				.edgesBy(function(e){
 					return e.user;
