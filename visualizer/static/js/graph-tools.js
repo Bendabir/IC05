@@ -42,9 +42,8 @@ function applyCategoryFilter(filter, useLocate) {
 
 // For hiding not without relation with the targeted branch
 function applyBranchFilter(filter){
-	var 
+	var filter_CS_or_TM_toReapply = '',
 		semesters = [],
-		filter_CS_or_TM_toReapply = '',
 		toKeep = [],
 		categories= ['CS', 'TM'],
 		branchs = ['TC', 'GI', 'GSU', 'GM', 'GSM', 'GP', 'GB'];
