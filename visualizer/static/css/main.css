@@ -31,6 +31,10 @@
 	box-shadow: none;
 }
 
+.text-justify {
+	text-align: justify;
+}
+
 kbd {
 	color: white;
 	background: #333;
@@ -39,25 +43,20 @@ kbd {
 	box-shadow: 1px 1px 2px 0px black;
 }
 
-.ui-autocomplete {
-    @extend .z-depth-1;
-    background-color: #fff;
-    position: fixed; /* To prevent li elements go to the end of the screen */
-
-    li {
-        @extend .col, .s12, .l4; /* Edit this the way you like it. or to make it the same width as the input */
-        font-size: 1.2rem;
-        color: #26a69a; /* Teal color */
-        line-height: 1.5rem;
-        padding: 1rem 1rem;
-
-        &:hover {
-            background: #eee;
-        }
-    }
+ul.brand-logo {
+	padding-left: 10px;
 }
-    /* Remove unwanted text comming from plugin */
-.ui-helper-hidden-accessible {
-    display: none;
-    visibility: hidden;
+
+#node-to-search {
+	width: 110%;
 }
+
+#dropdown {
+	margin-top: 15px;
+}
+
+#action-button {
+	right: 0; 
+	bottom: 0;
+}
+
