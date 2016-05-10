@@ -20,9 +20,9 @@ function applyCategoryFilter(filter, useLocate) {
 		// If the filter is not active
 		if(search(filter, 'key', filters.serialize()) == 0){
 			filters
-				.undo(categories.filter(function(f){
-					return f != filter;
-				}))
+				.undo(categories)
+				.apply();
+			filters
 				.nodesBy(function(n){
 					return n.attributes.Type != 'UV' || n.attributes.Cat == filter;
 				}, filter)
@@ -137,7 +137,7 @@ function locateBranch(branch){
 		s.graph.nodes().filter(function(n){
 			return n.attributes['Modularity Class'] == modularity;
 		}).forEach(function(n){
-			nodes.push(n.originalLabel);
+			nodes.push(n.id);
 		});
 
 		locate.nodes(nodes);
@@ -148,7 +148,7 @@ function showUserUVs(show){
 	if(show)	
 		filters
 				.nodesBy(function(n){
-					return search(n.originalLabel, 'semestre', userUVs) > 0 || n.user;
+					return search(n.id, 'semestre', userUVs) == 1 || n.user;
 				}, 'userNodes')
 				.edgesBy(function(e){
 					return e.user;
