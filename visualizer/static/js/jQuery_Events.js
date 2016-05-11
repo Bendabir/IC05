@@ -141,17 +141,17 @@ $('#right_menu_expand_all').click(function(){
 
 $('#node_category_TM').click(function(){
     filterType_CS_TM_Buttons_ShowAndHide('TM');
-    applyCategoryFilter('TM');
+    applyCategoryFilter(activeGraph, 'TM', true);
 });
 
 $('#node_category_CS').click(function(){
     filterType_CS_TM_Buttons_ShowAndHide('CS');
-    applyCategoryFilter('CS');
+    applyCategoryFilter(activeGraph, 'CS', true);
 });
 
 $('#node_category_All').click(function(){
     filterType_CS_TM_Buttons_ShowAndHide('All');
-    applyCategoryFilter('All');
+    applyCategoryFilter(activeGraph, 'All', true);
 });
 
 
@@ -162,35 +162,35 @@ $('#node_category_All').click(function(){
 // ===========================================================================================
 $('#node_branch_All').click(function(){
     filterBranchButtons_ShowAndHide('All');
-    applyBranchFilter('All');
+    applyBranchFilter(activeGraph, 'All');
 });
 $('#node_branch_TC').click(function(){
     filterBranchButtons_ShowAndHide('TC');
-    applyBranchFilter('TC');
+    applyBranchFilter(activeGraph, 'TC');
 });
 $('#node_branch_GI').click(function(){
     filterBranchButtons_ShowAndHide('GI');
-    applyBranchFilter('GI');
+    applyBranchFilter(activeGraph, 'GI');
 });
 $('#node_branch_GM').click(function(){
     filterBranchButtons_ShowAndHide('GM');
-    applyBranchFilter('GM');
+    applyBranchFilter(activeGraph, 'GM');
 });
 $('#node_branch_GSM').click(function(){
     filterBranchButtons_ShowAndHide('GSM');
-    applyBranchFilter('GSM');
+    applyBranchFilter(activeGraph, 'GSM');
 });
 $('#node_branch_GB').click(function(){
     filterBranchButtons_ShowAndHide('GB');
-    applyBranchFilter('GB');
+    applyBranchFilter(activeGraph, 'GB');
 });
 $('#node_branch_GSU').click(function(){
     filterBranchButtons_ShowAndHide('GSU');
-    applyBranchFilter('GSU');
+    applyBranchFilter(activeGraph, 'GSU');
 });
 $('#node_branch_GP').click(function(){
     filterBranchButtons_ShowAndHide('GP');
-    applyBranchFilter('GP');
+    applyBranchFilter(activeGraph, 'GP');
 });
 
 
@@ -270,8 +270,8 @@ $('#node_branch_GP').mouseleave(function (e) {
 
 
 $('#visibility-me').change(function(){
-    showUserUVs(true);
+    showUserUVs(activeGraph, true);
 });
 $('#visibility-all').change(function(){
-    showUserUVs(false);
+    showUserUVs(activeGraph, false);
 });
