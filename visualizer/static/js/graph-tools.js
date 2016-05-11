@@ -1,5 +1,6 @@
 // Get the IDs of displayed nodes
-function displayedNodes(){
+function displayedNodes(aGraph){
+    var s = aGraph.sigmaInstance;
 	return s.graph.nodes()
 				.filter(function(n){ /* filter() constructs a new array of all the values for which the
 										callback function returns a true value */
@@ -12,8 +13,10 @@ function displayedNodes(){
 }
 
 // For hidding or not some of nodes
-function applyCategoryFilter(filter, useLocate) {
+function applyCategoryFilter(aGraph, filter, useLocate) {
 	var categories= ['CS', 'TM'];
+    var filters = aGraph.graphPlugins.filters;
+    var locate = aGraph.graphPlugins.locate;
 
 	// If the filter exists
 	if(categories.indexOf(filter) != -1){
@@ -33,20 +36,23 @@ function applyCategoryFilter(filter, useLocate) {
 		filters.undo(categories).apply(); // Else undo all the filters
 
 	// Zoom on visible nodes
-	if (useLocate == undefined) { // then classic call from the CS/TM filter menu
-		locate.nodes(displayedNodes());
+	if (useLocate) { // then classic call from the CS/TM filter menu
+        locate.nodes(displayedNodes(aGraph));
 	}
-	/* The only call to applyCategoryFilter with useLocate defined (to false) is in the
+	/* Call to applyCategoryFilter with useLocate defined to false is in the
 		applyBranchFilter (see there for more details) */
 }
 
 // For hiding not without relation with the targeted branch
-function applyBranchFilter(filter){
+function applyBranchFilter(aGraph, filter){
 	var filter_CS_or_TM_toReapply = '',
 		semesters = [],
 		toKeep = [],
 		categories= ['CS', 'TM'],
 		branchs = ['TC', 'GI', 'GSU', 'GM', 'GSM', 'GP', 'GB'];
+    var filters = aGraph.graphPlugins.filters;
+    var locate = aGraph.graphPlugins.locate;
+    var s = aGraph.sigmaInstance;
 
 	if(branchs.indexOf(filter) != -1){
 		if(search(filter, 'key', filters.serialize()) == 0){
@@ -88,7 +94,7 @@ function applyBranchFilter(filter){
 
 			// Apply filters
 			// Reapply filter on the nodes categorie if there was one. Here too, applying a filter on '' don't change a thing
-			applyCategoryFilter(filter_CS_or_TM_toReapply, false); /* false in second parameter to avoid the double zoom :
+			applyCategoryFilter(aGraph, filter_CS_or_TM_toReapply, false); /* false in second parameter to avoid the double zoom :
 																		the one from applyCategoryFilter and the one at the end
 																		 of this function */
 			// apply new branch filter :
@@ -104,32 +110,34 @@ function applyBranchFilter(filter){
 	}
 
 	// Zoom on visible nodes
-	locate.nodes(displayedNodes());
+	locate.nodes(displayedNodes(aGraph));
 }
 
 // Unselect all the nodes
-function unselectAll(){
-	activeState.dropNodes();
+function unselectAll(aGraph){
+    aGraph.graphPlugins.activeState.dropNodes();
 }
 
 // Get the modularity of a subset
-function getModularity(branch){
-	var classes = {
-		'TC' : '5',
-		'GI' : '2',
-		'GM' : '0',
-		'GSM' : '0',
-		'GSU' : '4',
-		'GB' : '1',
-		'GP' : '3',
-	};
-
-	return classes[branch];
+function getBranchModularity(aGraph, branch){
+    return aGraph.sigmaInstance.nodes(branch + '01').attributes['Modularity Class'];
+	// var classes = {
+	// 	'TC' : '5',
+	// 	'GI' : '2',
+	// 	'GM' : '0',
+	// 	'GSM' : '0',
+	// 	'GSU' : '4',
+	// 	'GB' : '1',
+	// 	'GP' : '3',
+	// };
+	// return classes[branch];
 }
 
 // Locate a group of node (by modularity class)
-function locateBranch(branch){
-	var modularity = getModularity(branch);
+function locateBranch(aGraph, branch){
+	var modularity = getBranchModularity(aGraph, branch);
+    var s = aGraph.sigmaInstance;
+    var locate = aGraph.graphPlugins.locate;
 
 	if(typeof modularity !== 'undefined'){
 		var nodes = [];
@@ -144,7 +152,11 @@ function locateBranch(branch){
 	}
 }
 
-function showUserUVs(show){
+function showUserUVs(aGraph, show){
+    var filters = aGraph.graphPlugins.filters;
+    var locate = aGraph.graphPlugins.locate;
+
+
 	if(show)	
 		filters
 				.nodesBy(function(n){
@@ -158,14 +170,18 @@ function showUserUVs(show){
 		filters.undo('userNodes', 'userEdges').apply();
 
 	// Zoom on visible nodes
-	locate.nodes(displayedNodes());
+	locate.nodes(displayedNodes(aGraph));
 }
 
 // To search a node
-function searchNode(nodeID){
+function searchNode(aGraph, nodeID){
 	nodeID = nodeID.toUpperCase();
-	if(['TC', 'GM', 'GSM', 'GI', 'GSU', 'GP', 'GB'].indexOf(nodeID) != -1){
-		locateBranch(nodeID);
+    var s = aGraph.sigmaInstance;
+    var activeState = aGraph.graphPlugins.activeState;
+    var locate = aGraph.graphPlugins.locate;
+
+	if(['TC', 'GM', 'GSM', 'GI', 'GSU', 'GP', 'GB'].indexOf(nodeID) != -1) {
+		locateBranch(aGraph, nodeID);
 		$('#graph-container').focus(); // Give the focus to the graph
 	}
 	else {
@@ -204,7 +220,8 @@ function searchNode(nodeID){
 }
 
 // For camera handling
-function fitSize(){
+function fitSize(aGraph){
+    var locate = aGraph.graphPlugins.locate;
 	// sigma.misc.animation.camera(s.camera, { 
 	// 	x:0, 
 	// 	y:0,
@@ -213,29 +230,33 @@ function fitSize(){
 	// {
 	// 	duration: s.settings('mouseZoomDuration')
 	// });
-	locate.nodes(displayedNodes());
+	locate.nodes(displayedNodes(aGraph));
 }
 
-function zoomIn(){
+function zoomIn(aGraph){
+    var s = aGraph.sigmaInstance;
+
 	var ratio = Math.max(
 					s.settings('zoomMin'),
 					Math.min(s.settings('zoomMax'), s.camera.ratio * (1 / s.settings('zoomingRatio') || 1))
 			    );
 	sigma.misc.animation.camera(s.camera, { 
-        ratio: ratio,
+        ratio: ratio
 	},
 	{
         duration: s.settings('mouseZoomDuration')
 	});
 }
 
-function zoomOut(){
+function zoomOut(aGraph){
+    var s = aGraph.sigmaInstance;
+
 	var ratio = Math.max(
 					s.settings('zoomMin'),
 					Math.min(s.settings('zoomMax'), s.camera.ratio * (s.settings('zoomingRatio') || 1))
 			    );
 	sigma.misc.animation.camera(s.camera, { 
-        ratio: ratio,
+        ratio: ratio
 	},
 	{
         duration: s.settings('mouseZoomDuration')
@@ -244,7 +265,9 @@ function zoomOut(){
 
 // Set the halo to specific nodes
 // The size depends on the zoom ratio
-function renderHalo(UVs){
+function renderHalo(aGraph, UVs){
+    var s = aGraph.sigmaInstance;
+
 	var nodes = [];
 
 	UVs.forEach(function(u){
@@ -267,8 +290,25 @@ function renderHalo(UVs){
 
 // Set the glyphs
 // The size depends on the zoom ratio
-function renderGlyphs(){
+function renderGlyphs(aGraph){
+    var s = aGraph.sigmaInstance;
 	s.renderers[0].glyphs({
 		lineWidth: 2 / Math.pow(s.camera.ratio, 0.5)
 	});
 }
+
+
+// Define a new method to retrieve neighbors of a node
+sigma.classes.graph.addMethod('neighbors', function(nodeID){
+    var neighbors = [];
+
+    // For each edge, we look for visible neighbors of nodeID
+    this.edges().forEach(function(e){
+        if((e.target == nodeID || e.source == nodeID) && !e.hidden){
+            var pal = (e.target == nodeID) ? e.source : e.target;
+
+            neighbors.push(pal);
+        }
+    });
+    return neighbors;
+});

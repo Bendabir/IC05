@@ -165,9 +165,9 @@
 				<i class="large material-icons">aspect_ratio</i>
 			</a>
 			<ul>
-				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="500" data-tooltip="Dézoomer" onclick="zoomOut()"><i class="material-icons">remove</i></a></li>
-				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="500" data-tooltip="Zoomer" onclick="zoomIn()"><i class="material-icons">add</i></a></li>
-				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="500" data-tooltip="Ajuster" onclick="fitSize()"><i class="material-icons">fullscreen</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="500" data-tooltip="Dézoomer" onclick="zoomOut(activeGraph)"><i class="material-icons">remove</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="500" data-tooltip="Zoomer" onclick="zoomIn(activeGraph)"><i class="material-icons">add</i></a></li>
+				<li><a class="btn-floating blue-grey lighten-2 tooltipped" data-position="left" data-delay="500" data-tooltip="Ajuster" onclick="fitSize(activeGraph)"><i class="material-icons">fullscreen</i></a></li>
 		    </ul>
 		</div>
 
@@ -259,8 +259,12 @@
 		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.renderers.glyphs.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'node_modules/linkurious/dist/plugins/sigma.renderers.halo.min.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/tools.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/bindingGraphEvents.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/front_end_tools.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/graph-tools.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/construct_a_graph.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
 
 
 
@@ -315,16 +319,16 @@
 
 				// Search
 				$('#node-to-search').onEnter(function(){
-					searchNode($(this).val());
+					searchNode(activeGraph, $(this).val());
 				});
 
 				// Autocomplete
 				$('#node-to-search').on('input', function(){
 					var search = $(this).val(),
 						// Targeting matching and displayed nodes
-						matchNodes = tagsForSearchBar.filter(function(n){
+						matchNodes = graphBipartite.tagsForSearchBar.filter(function(n){
 							var hidden = false,
-								node = s.graph.nodes(n);
+								node = activeGraph.sigmaInstance.graph.nodes(n);
 
 							if(node)
 								hidden = node.hidden;
@@ -338,7 +342,7 @@
 						var maxLength = Math.min(matchNodes.length, 5);
 
 						for(var i = 0; i < maxLength; i++){
-							var node = s.graph.nodes(matchNodes[i]),
+							var node = activeGraph.sigmaInstance.graph.nodes(matchNodes[i]),
 								name = '';
 
 							if(node)
@@ -351,7 +355,7 @@
 
 				// On autocomplete element click
 				$('#dropdown').on('click', 'li', function(e){
-					searchNode($(this).find('a span.node').text());
+					searchNode(activeGraph, $(this).find('a span.node').text());
 				});
 
 				// Hide autocomplete on click elsewhere
@@ -378,24 +382,24 @@
 					// CTRL + 0
 					if(e.ctrlKey && e.keyCode === 96){
 						e.preventDefault();
-						fitSize();
+						fitSize(activeGraph);
 					}
 
 					// CTRL + +
 					if(e.ctrlKey && e.keyCode === 107){
 						e.preventDefault();
-						zoomIn();
+						zoomIn(activeGraph);
 					}
 
 					// CTRL + -
 					if(e.ctrlKey && e.keyCode === 109){
 						e.preventDefault();
-						zoomOut();
+						zoomOut(activeGraph);
 					}
 
 					// Escape
 					if(e.keyCode === 27)
-						unselectAll();
+						unselectAll(activeGraph);
 
 					// CTRL + A
 					if(e.ctrlKey && e.keyCode == 65)
