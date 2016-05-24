@@ -75,6 +75,7 @@ function changeInfobox (aGraph) {
             success: function (uvwebData) {
                 $('#uv-progress').remove();
                 message = uvMessage(selectedNode, uvwebData);
+                $('#right-menu-infoUV ul.collection').innerHTML = '<li class="collection-item center-align"><h5>' + selectedNode.id + ' - ' + selectedNode.attributes.nomUV + '</h5></li>';
                 $('#right-menu-infoUV ul.collection').append(message);
                 $('#right-menu').show();
             },
