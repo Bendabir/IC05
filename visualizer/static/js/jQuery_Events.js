@@ -1,11 +1,11 @@
 var branchColor = {
-        'TC' : 'green darken-2',
-        'GI' : 'blue',
-        'GM' : 'deep-purple accent-1',
-        'GSM' : 'deep-purple accent-1',
-        'GSU' : 'pink lighten-2',
-        'GP' : 'orange',
-        'GB' : 'light-green accent-4',
+        'TC' : 'brown lighten-2',
+        'GI' : 'purple lighten-4',
+        'GM' : 'teal lighten-3',
+        'GSM' : 'teal lighten-3',
+        'GSU' : 'yellow darken-4',
+        'GP' : 'blue-grey lighten-1',
+        'GB' : 'amber lighten-4',
         'All' : ''
     };
 var branchs = ['TC', 'GI', 'GM', 'GSM', 'GSU', 'GP', 'GB'];

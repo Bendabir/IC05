@@ -23,7 +23,8 @@ if (user){
 			// 	$('#user-uvs-switch').hide(0);
 			init_a_graph(
 				'graphBipartite',
-				'static/data/graph_bipartite.json',
+				//'static/data/graph_bipartite.json',
+				'static/data/color_24Mai.json',
 				userUVs,
 				function(aGraph){ // callback function called when init_a_graph is done
 					graphBipartite = aGraph;
@@ -41,7 +42,8 @@ if (user){
 else {
 	init_a_graph(
 		'graphBipartite',
-		'static/data/graph_bipartite.json',
+		//'static/data/graph_bipartite.json',
+		'static/data/color_24Mai.json',
 		userUVs,
 		function(aGraph){ // callback function called when init_a_graph is done
 			graphBipartite = aGraph;
