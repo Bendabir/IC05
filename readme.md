@@ -2,6 +2,16 @@
 
 Plateforme de visualisation du parcours des étudiants.
 
+## Interface
+
+Voici quelques exemples de l'interface dans sa dernière version (certaines fonctionnalités ne sont pas implémentées).
+
+![Screenshot](img/1.png)
+
+![Screenshot](img/2.png)
+
+![Screenshot](img/3.png)
+
 ## Installation
 
 L'installation requiert pip, [bower](http://bower.io/) et [npm](https://www.npmjs.com/) installés sur votre machine. Elle passe par l'installation des dépendances Python et front-end et la création d'un fichier de configuration en fonction de la base de données. 
